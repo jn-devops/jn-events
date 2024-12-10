@@ -56,6 +56,11 @@ class EmployeesResource extends Resource
     {
         return $table
             ->defaultSort('last_name','asc')
+            ->groups([
+                'company',
+                'department',
+                'unit_group'
+            ])
             ->defaultPaginationPageOption(50)
             ->columns([
                 Tables\Columns\TextColumn::make('company')
