@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Checkin;
+use App\Models\Employees;
 use App\Models\Organization;
 use Exception;
 use Filament\Forms;
@@ -32,20 +33,44 @@ class RegistrationForm extends Component implements HasForms
                 ->label('Employee ID')
                 ->unique('checkins', 'employee_id',ignoreRecord: true)
                 ->required(),
-                Forms\Components\TextInput::make('name')
-                    ->label('Name')
+                Forms\Components\TextInput::make('last_name')
+                    ->label('Last Name')
+                    ->required(),
+                Forms\Components\TextInput::make('first_name')
+                    ->label('First Name')
                     ->required(),
             ])
             ->statePath('data')
             ->model(Checkin::class);
     }
 
-    public function create(): void
+    public function create()
     {
         try {
             $data = $this->form->getState();
 
-            $record = Checkin::create($data);
+            $employee = Employees::where('employee_id', $data['employee_id'])->first();
+            if ($employee) {
+                if ($employee->first_name != $data['first_name'] && $employee->last_name != $data['last_name']) {
+                    $this->error = 'Employee details dont match';
+                    $this->dispatch('open-modal', id: 'error-modal');
+                    return;
+                }
+            }else{
+                $this->error = 'Employee ID doesnt exists';
+                $this->dispatch('open-modal', id: 'error-modal');
+                return;
+            }
+
+            $this->data=[
+                'employee_id' => $data['employee_id'],
+                'name' => $employee->first_name.' '.$employee->last_name,
+            ];
+
+            $record = Checkin::create([
+                'employee_id' => $data['employee_id'],
+                'name' => $employee->first_name.' '.$employee->last_name,
+            ]);
 
             $this->form->model($record)->saveRelationships();
             $this->dispatch('open-modal', id: 'success-modal');
