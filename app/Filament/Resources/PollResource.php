@@ -59,8 +59,29 @@ class PollResource extends Resource
                     ])->columns(12)->columnSpan(2),
                 Forms\Components\Section::make()
                     ->schema([
-                        Placeholder::make('qr_code')
-                            ->label('QR Code')
+                        Placeholder::make('live_poll_qr_code')
+                            ->label('Live Poll QR Code')
+                            ->content(function (Get $get, Model $record) {
+                                return \LaraZeus\Qr\Facades\Qr::render(
+                                    data:  sprintf(
+                                        '%s/polls/%s/votes',
+                                        config('app.url'),
+                                        $record->id,
+                                    ),
+                                );
+                            }),
+                        Placeholder::make('live_poll_link')
+                            ->label('Live Poll Link')
+                            ->content(function (Get $get, Model $record) {
+                                $url = sprintf(
+                                    '%s/polls/%s/votes',
+                                    config('app.url'),
+                                    $record->id,
+                                );
+                                return new HtmlString('<a href="' . $url . '" target="_blank" rel="noopener noreferrer" class="text-blue-500 underline">' . $url . '</a>');
+                            }),
+                        Placeholder::make('vote_qr_code')
+                            ->label('Vote QR Code')
                             ->content(function (Get $get, Model $record) {
                                 return \LaraZeus\Qr\Facades\Qr::render(
                                     data:  sprintf(
@@ -70,13 +91,13 @@ class PollResource extends Resource
                                     ),
                                 );
                             }),
-                        Placeholder::make('link')
+                        Placeholder::make('vote_link')
+                            ->label('Vote Link')
                             ->content(function (Get $get, Model $record) {
                                 $url = sprintf(
-                                    '%s/vote/%s%s',
+                                    '%s/vote/%s',
                                     config('app.url'),
                                     $record->id,
-                                    $get('organization') ? '?organization=' . $get('organization') : ''
                                 );
                                 return new HtmlString('<a href="' . $url . '" target="_blank" rel="noopener noreferrer" class="text-blue-500 underline">' . $url . '</a>');
                             }),

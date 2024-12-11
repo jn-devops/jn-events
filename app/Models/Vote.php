@@ -10,7 +10,7 @@ class Vote extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['poll_option_id', 'employee_id'];
+    protected $fillable = ['id','poll_id','poll_option_id', 'employee_id'];
 
     public $incrementing = false;
     protected $keyType = 'uuid';
@@ -20,12 +20,13 @@ class Vote extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            if (empty($model->id)) {
                 $model->id = (string) Str::uuid(); // Generate UUID if not set
-            }
         });
     }
-
+    public function poll()
+    {
+        return $this->belongsTo(Poll::class);
+    }
     public function pollOption()
     {
         return $this->belongsTo(PollOptions::class, 'poll_option_id');
