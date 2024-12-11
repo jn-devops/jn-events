@@ -5,12 +5,15 @@ namespace App\Livewire;
 use App\Models\Checkin;
 use App\Models\Employees;
 use App\Models\Poll;
+use App\Models\PollOptions;
+use App\Models\User;
 use App\Models\Vote;
 use Exception;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 use Illuminate\Contracts\View\View;
 
@@ -94,6 +97,15 @@ class VoteForm extends Component implements HasForms
                 'poll_option_id'=>$this->data['poll_option_id'],
             ]);
             $this->form->model($record)->saveRelationships();
+            $pollOption = PollOptions::find($this->data['poll_option_id']);
+            foreach (User::all() as $recipient) {
+                Notification::make()
+                    ->title('Vote')
+                    ->body("Employee {$employee->first_name} {$employee->last_name} (ID: {$employee->employee_id}) has voted for '{$pollOption->option}' in the poll titled '{$this->poll->title}'.")
+                    ->broadcast($recipient)
+                    ->send()
+                    ->sendToDatabase($recipient, isEventDispatched: true);
+            }
             $this->dispatch('open-modal', id: 'success-modal');
 
         }catch (Exception $e) {
@@ -106,6 +118,21 @@ class VoteForm extends Component implements HasForms
         }
 
     }
+
+//    public function sendNotification(){
+//        foreach (User::all() as $recipient) {
+////            $recipient->notify(
+////                Notification::make()
+////                    ->title('Test')
+////                    ->toBroadcast()
+////                    ->toDatabase()
+////            );
+//            Notification::make()
+//                ->title($recipient->name)
+//                ->broadcast($recipient)
+//                ->sendToDatabase($recipient);
+//        }
+//    }
     public function closeModal()
     {
         $this->data =[];

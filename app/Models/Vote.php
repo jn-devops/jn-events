@@ -30,4 +30,9 @@ class Vote extends Model
     {
         return $this->belongsTo(PollOptions::class, 'poll_option_id');
     }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employees::class, 'employee_id', 'employee_id'); // Define the relationship
+    }
 }

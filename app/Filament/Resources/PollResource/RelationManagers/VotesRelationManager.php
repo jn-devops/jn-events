@@ -10,6 +10,7 @@ use Filament\Tables\Columns\Summarizers\Count;
 use Filament\Tables\Columns\Summarizers\Summarizer;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Carbon;
 
@@ -18,7 +19,7 @@ class VotesRelationManager extends RelationManager
     protected static string $relationship = 'votes';
     public function isReadOnly(): bool
     {
-        return true;
+        return false;
     }
     public function form(Form $form): Form
     {
@@ -41,13 +42,26 @@ class VotesRelationManager extends RelationManager
                         $date = Carbon::parse($state);
                         $formattedDate = $date->format('F j, Y');
                         $formattedTime = $date->format('g:i A');
-                        $timeAgo = $date->diffForHumans(); // 1 hour ago
+                        $timeAgo = $date->diffForHumans();
                         return $formattedDate . '<br>' . $formattedTime  .'<br><small>' . $timeAgo . '</small>';
                     })
                     ->html()
                     ->wrap()
                     ->grow(false),
-                Tables\Columns\TextColumn::make('employee_id')->label('Employee ID')
+                Tables\Columns\TextColumn::make('employee_id')
+                    ->label('Employee')
+                    ->formatStateUsing(function (Model $record) {
+                        $name =implode(' ', array_filter([
+                            $record->employee->first_name ?? '',
+                            $record->employee->middle_name ?? '',
+                            $record->employee->last_name ?? '',
+                        ]));
+
+                        return $name. '<br>'.$record->employee_id??'';
+                    })
+                    ->grow(false)
+                    ->html()
+                    ->wrap()
                     ->summarize(Count::make()->label('Total Votes')),
                 Tables\Columns\TextColumn::make('pollOption.option')->label('Vote')
                     ->summarize(Summarizer::make()
@@ -72,10 +86,10 @@ class VotesRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+//                Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+//                Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

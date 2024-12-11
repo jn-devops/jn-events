@@ -19,4 +19,8 @@ class Employees extends Model
         'unit',
         'code_1',
     ];
+    public function votes()
+    {
+        return $this->hasMany(Vote::class, 'employee_id', 'employee_id'); // Define the relationship
+    }
 }
