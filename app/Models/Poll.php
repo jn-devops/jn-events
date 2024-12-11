@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Poll extends Model
 {
@@ -14,6 +15,16 @@ class Poll extends Model
     protected $casts = [
         'active' => 'boolean'
     ];
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->id)) {
+                $model->id = (string) Str::uuid(); // Generate UUID if not set
+            }
+        });
+    }
     public function options()
     {
         return $this->hasMany(PollOptions::class);
@@ -21,6 +32,6 @@ class Poll extends Model
 
     public function votes()
     {
-        return $this->hasManyThrough(Vote::class, PollOptions::class);
+        return $this->hasManyThrough(Vote::class, PollOptions::class, 'poll_id', 'poll_option_id', 'id', 'id');
     }
 }

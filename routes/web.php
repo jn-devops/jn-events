@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::get('/attendance', \App\Livewire\RegistrationForm::class)->name('registration-form');
+Route::get('/vote/{poll}', \App\Livewire\VoteForm::class)->name('vote-form');
 
 Route::get('/', function (){
     $current_program = \App\Models\Programs::where('active', 1)->first();

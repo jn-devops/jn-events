@@ -6,12 +6,17 @@ use App\Filament\Resources\PollResource\Pages;
 use App\Filament\Resources\PollResource\RelationManagers;
 use App\Models\Poll;
 use Filament\Forms;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\HtmlString;
 
 class PollResource extends Resource
 {
@@ -23,14 +28,65 @@ class PollResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
-                Forms\Components\Toggle::make('active')
-                    ->required(),
-            ]);
+                Forms\Components\Section::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('title')
+                            ->required()
+                            ->maxLength(255)
+                            ->columnSpan(10),
+                        Forms\Components\Toggle::make('active')
+                            ->inline(false)
+                            ->columnSpan(2),
+                        Forms\Components\Textarea::make('description')
+                            ->required()
+                            ->maxLength(255)
+                            ->columnSpanFull(),
+                        Forms\Components\Repeater::make('options')
+                            ->relationship()
+                            ->schema([
+                                Forms\Components\FileUpload::make('image')
+                                    ->image()
+                                    ->avatar()
+                                    ->required(),
+                                Forms\Components\TextInput::make('option')
+                                    ->required()
+                                ->maxLength(255)
+                                ->columnSpan(2),
+                            ])
+                            ->columns(3)
+                            ->columnSpanFull()
+
+                    ])->columns(12)->columnSpan(2),
+                Forms\Components\Section::make()
+                    ->schema([
+                        Placeholder::make('qr_code')
+                            ->label('QR Code')
+                            ->content(function (Get $get, Model $record) {
+                                return \LaraZeus\Qr\Facades\Qr::render(
+                                    data:  sprintf(
+                                        '%s/vote/%s',
+                                        config('app.url'),
+                                        $record->id,
+                                    ),
+                                );
+                            }),
+                        Placeholder::make('link')
+                            ->content(function (Get $get, Model $record) {
+                                $url = sprintf(
+                                    '%s/vote/%s%s',
+                                    config('app.url'),
+                                    $record->id,
+                                    $get('organization') ? '?organization=' . $get('organization') : ''
+                                );
+                                return new HtmlString('<a href="' . $url . '" target="_blank" rel="noopener noreferrer" class="text-blue-500 underline">' . $url . '</a>');
+                            }),
+                        Placeholder::make('created_at')
+                            ->content(fn ($record) => $record?->created_at?->diffForHumans() ?? new HtmlString('&mdash;')),
+
+                        Placeholder::make('updated_at')
+                            ->content(fn ($record) => $record?->created_at?->diffForHumans() ?? new HtmlString('&mdash;'))
+                    ])->columnSpan(1)->columns(1)
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
@@ -69,7 +125,7 @@ class PollResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\VotesRelationManager::class,
         ];
     }
 
