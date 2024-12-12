@@ -29,10 +29,6 @@ class RegistrationForm extends Component implements HasForms
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('employee_id')
-                ->label('Employee ID')
-                ->unique('checkins', 'employee_id',ignoreRecord: true)
-                ->required(),
                 Forms\Components\TextInput::make('last_name')
                     ->label('Last Name')
                     ->required(),
@@ -49,26 +45,30 @@ class RegistrationForm extends Component implements HasForms
         try {
             $data = $this->form->getState();
 
-            $employee = Employees::where('employee_id', $data['employee_id'])->first();
-            if ($employee) {
-                if ($employee->first_name != $data['first_name'] && $employee->last_name != $data['last_name']) {
-                    $this->error = 'Employee details dont match';
-                    $this->dispatch('open-modal', id: 'error-modal');
-                    return;
-                }
-            }else{
-                $this->error = 'Employee ID doesnt exists';
+            $employee = Employees::whereRaw('UPPER(last_name) = ?', [strtoupper($data['last_name'])])
+                ->whereRaw('UPPER(first_name) = ?', [strtoupper($data['first_name'])])
+                ->first();
+
+            $checkin = Checkin::whereRaw('UPPER(name) = ?', [strtoupper($data['first_name'].' '.$data['last_name'])])
+                ->whereDate('created_at', now()->toDateString()) // Ensure the check-in is for today
+                ->first();
+
+            if (!$employee) {
+                $this->error = 'Employee didnt match our records';
+                $this->dispatch('open-modal', id: 'error-modal');
+                return;
+            }elseif ($checkin) {
+                $this->error = 'This Employee has already been checked-in.';
                 $this->dispatch('open-modal', id: 'error-modal');
                 return;
             }
 
             $this->data=[
-                'employee_id' => $data['employee_id'],
+                'employee_id' => $employee->id??'',
                 'name' => $employee->first_name.' '.$employee->last_name,
             ];
 
             $record = Checkin::create([
-                'employee_id' => $data['employee_id'],
                 'name' => $employee->first_name.' '.$employee->last_name,
             ]);
 
@@ -77,7 +77,7 @@ class RegistrationForm extends Component implements HasForms
 
         }catch (Exception $e) {
             if($e->getMessage() == "The employee ID has already been taken."){
-                $this->error="This Employee ID has already been checked-in.";
+                $this->error="This Employee has already been checked-in.";
             }else{
                 $this->error=$e->getMessage();
             }
