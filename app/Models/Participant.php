@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Participant extends Model
 {
@@ -11,4 +12,9 @@ class Participant extends Model
         'category',
         'image',
     ];
+
+    public function scores()
+    {
+        return $this->hasMany(Score::class);
+    }
 }
