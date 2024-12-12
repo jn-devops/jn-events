@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('votes', function (Blueprint $table) {
-            $table->uuid('poll_id')->after('id'); // Add poll_id column
-            $table->foreign('poll_id')->references('id')->on('polls')->onDelete('cascade'); // Set foreign key
+//            $table->uuid('poll_id')->after('id'); // Add poll_id column
+//            $table->foreign('poll_id')->references('id')->on('polls')->onDelete('cascade'); // Set foreign key
         });
     }
 
@@ -23,8 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('votes', function (Blueprint $table) {
-            $table->dropForeign(['poll_id']); // Drop foreign key
-            $table->dropColumn('poll_id'); // Drop poll_id column
+//            $table->dropForeign(['poll_id']); // Drop foreign key
+//            $table->dropColumn('poll_id'); // Drop poll_id column
         });
     }
 };

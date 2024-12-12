@@ -2,7 +2,8 @@
     <h1 class="text-xl font-semibold mb-4">{{ $poll->title }}</h1>
     <p class="text-sm text-gray-600 mb-4">{{ $poll->description }}</p>
 
-    <div wire:poll.1000="fetchVotes"> {{-- Polling every 1 second for updates --}}
+{{--    <div wire:poll.1000="fetchVotes"> --}}{{-- Polling every 1 second for updates --}}
+        <div > {{-- Polling every 1 second for updates --}}
 {{--        <div wire:loading.delay class="text-center text-gray-500">Loading...</div>--}}
 
         @if (empty($votes))

@@ -31,7 +31,7 @@ class CheckinResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('employee_id')
                     ->label('Employee ID')
-                    ->unique('checkins', 'employee_id',ignoreRecord: true)
+                    ->nullable()
                     ->required(),
                 Forms\Components\TextInput::make('name')
                     ->label('Name')
