@@ -69,7 +69,7 @@ class PollResource extends Resource
                                         $record->id,
                                     ),
                                 );
-                            }),
+                            })->hiddenOn('create'),
                         Placeholder::make('live_poll_link')
                             ->label('Live Poll Link')
                             ->content(function (Get $get, Model $record) {
@@ -79,7 +79,7 @@ class PollResource extends Resource
                                     $record->id,
                                 );
                                 return new HtmlString('<a href="' . $url . '" target="_blank" rel="noopener noreferrer" class="text-blue-500 underline">' . $url . '</a>');
-                            }),
+                            })->hiddenOn('create'),
                         Placeholder::make('vote_qr_code')
                             ->label('Vote QR Code')
                             ->content(function (Get $get, Model $record) {
@@ -90,7 +90,7 @@ class PollResource extends Resource
                                         $record->id,
                                     ),
                                 );
-                            }),
+                            })->hiddenOn('create'),
                         Placeholder::make('vote_link')
                             ->label('Vote Link')
                             ->content(function (Get $get, Model $record) {
@@ -100,7 +100,7 @@ class PollResource extends Resource
                                     $record->id,
                                 );
                                 return new HtmlString('<a href="' . $url . '" target="_blank" rel="noopener noreferrer" class="text-blue-500 underline">' . $url . '</a>');
-                            }),
+                            })->hiddenOn('create'),
                         Placeholder::make('created_at')
                             ->content(fn ($record) => $record?->created_at?->diffForHumans() ?? new HtmlString('&mdash;')),
 
