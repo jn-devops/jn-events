@@ -105,7 +105,7 @@ class VoteForm extends Component implements HasForms
             foreach (User::all() as $recipient) {
                 Notification::make()
                     ->title("Vote: {$this->poll->title}")
-                    ->body("Employee {$employee->first_name} {$employee->last_name} (ID: {$employee->employee_id}) has voted for '{$pollOption->option}' in the poll titled '{$this->poll->title}'.")
+                    ->body("Employee {$employee->first_name} {$employee->last_name} (ID: {$employee->employee_id??''}) has voted for '{$pollOption->option}' in the poll titled '{$this->poll->title}'.")
                     ->broadcast($recipient)
                     ->sendToDatabase($recipient, isEventDispatched: true);
             }
