@@ -66,6 +66,10 @@ class RegistrationForm extends Component implements HasForms
             $this->data=[
                 'employee_id' => $employee->id??'',
                 'name' => $employee->first_name.' '.$employee->last_name,
+                'company' => $employee->company,
+                'department' => $employee->department,
+                'unit_group' => $employee->unit_group,
+                'unit' => $employee->unit,
             ];
 
             $record = Checkin::create([
