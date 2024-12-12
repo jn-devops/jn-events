@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Score extends Model
 {
     protected $fillable = [
+        'competition_id',
         'participant_id',
+        'judge_id',
         'criteria',
         'score'
     ];
