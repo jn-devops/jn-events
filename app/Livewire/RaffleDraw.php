@@ -8,6 +8,7 @@ class RaffleDraw extends Component
 {
     public function render()
     {
-        return view('livewire.raffle-draw');
+        return view('livewire.raffle-draw')
+            ->layout('components.layouts.appV2');
     }
 }
