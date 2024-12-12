@@ -58,10 +58,12 @@ class VoteForm extends Component implements HasForms
 //                    ->required()
 //                    ->reactive() // Ensure live updates when state changes
 //                    ->inline(false), // Adjust display if needed
-                Forms\Components\TextInput::make('employee_id')
-                    ->label('Employee ID')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\TextInput::make('last_name')
+                    ->label('Last Name')
+                    ->required(),
+                Forms\Components\TextInput::make('first_name')
+                    ->label('First Name')
+                    ->required(),
             ])
             ->statePath('data')
             ->model(Vote::class);
@@ -75,20 +77,23 @@ class VoteForm extends Component implements HasForms
                 $this->dispatch('open-modal', id: 'error-modal');
                 return;
             }
-            $employee = Employees::where('employee_id', $this->data['employee_id'])->first();
+            $employee = Employees::whereRaw('UPPER(last_name) = ?', [strtoupper($this->data['last_name'])])
+                ->whereRaw('UPPER(first_name) = ?', [strtoupper($this->data['first_name'])])
+                ->first();
+
             if ($employee) {
-                $vote_exist = Vote::where('employee_id', $this->data['employee_id'])
+                $vote_exist = Vote::where('employee_id', $employee->id)
                     ->whereHas('pollOption', function ($query) {
                         $query->where('poll_id', $this->poll->id);
                     })
                     ->first();
                 if($vote_exist){
-                    $this->error = 'Employee ID already voted for this poll';
+                    $this->error = 'Employee already voted for this poll';
                     $this->dispatch('open-modal', id: 'error-modal');
                     return;
                 }
             }else{
-                $this->error = 'Employee ID doesnt exists';
+                $this->error = 'Employee doesnt match our records';
                 $this->dispatch('open-modal', id: 'error-modal');
                 return;
             }
@@ -96,7 +101,7 @@ class VoteForm extends Component implements HasForms
             $record = Vote::create([
                 'id'=>(string) Str::uuid(),
                 'poll_id' => $this->poll->id,
-                'employee_id' => $this->data['employee_id'],
+                'employee_id' => $employee->id,
                 'poll_option_id'=>$this->data['poll_option_id'],
             ]);
             $this->form->model($record)->saveRelationships();
@@ -105,7 +110,7 @@ class VoteForm extends Component implements HasForms
             foreach (User::all() as $recipient) {
                 Notification::make()
                     ->title("Vote: {$this->poll->title}")
-                    ->body("Employee {$employee->first_name} {$employee->last_name} (ID: {$employee->employee_id??''}) has voted for '{$pollOption->option}' in the poll titled '{$this->poll->title}'.")
+                    ->body("Employee {$employee->first_name} {$employee->last_name} (ID: {$employee->employee_id}) has voted for '{$pollOption->option}' in the poll titled '{$this->poll->title}'.")
                     ->broadcast($recipient)
                     ->sendToDatabase($recipient, isEventDispatched: true);
             }

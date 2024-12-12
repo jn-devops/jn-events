@@ -34,6 +34,6 @@ class Vote extends Model
 
     public function employee()
     {
-        return $this->belongsTo(Employees::class, 'employee_id', 'employee_id'); // Define the relationship
+        return $this->belongsTo(Employees::class, 'employee_id', 'id'); // Define the relationship
     }
 }

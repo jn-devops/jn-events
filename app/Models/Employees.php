@@ -21,6 +21,6 @@ class Employees extends Model
     ];
     public function votes()
     {
-        return $this->hasMany(Vote::class, 'employee_id', 'employee_id'); // Define the relationship
+        return $this->hasMany(Vote::class, 'employee_id', 'id'); // Define the relationship
     }
 }

@@ -57,7 +57,7 @@ class VotesRelationManager extends RelationManager
                             $record->employee->last_name ?? '',
                         ]));
 
-                        return $name. '<br>'.$record->employee_id??'';
+                        return $name. '<br>';
                     })
                     ->grow(false)
                     ->html()
