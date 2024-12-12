@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\PollVotes;
+use App\Livewire\RaffleDraw;
 use Illuminate\Support\Facades\Route;
 
 //Route::get('/', function () {
@@ -27,3 +28,5 @@ Route::get('/', function (){
         return view('welcome');
     }
 })->name('welcome');
+
+Route::get('/raffle-draw', RaffleDraw::class);
