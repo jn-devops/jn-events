@@ -6,8 +6,9 @@ window.addEventListener('EchoLoaded', () => {
     // Listen to the private channel
     window.Echo.private('poll-updates')
         .listen('.vote.updated', (event) => {
-            // console.log('Votes updated:', event);
-            // console.log('Poll ID:', event.poll_id);
+            console.log('Votes updated:', event);
+            console.log('Poll ID:', event.poll_id);
+            console.log('Votes ID:', event.vote);
 
             // Get the Livewire component's $wire object
             const livewireComponent = document.querySelector('[wire\\:id]');
