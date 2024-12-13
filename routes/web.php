@@ -2,6 +2,7 @@
 
 use App\Events\DrawRaffle;
 use App\Livewire\PollVotes;
+use App\Livewire\PopCultureIconVote;
 use App\Livewire\RaffleDraw;
 use App\Models\Prizes;
 use Illuminate\Support\Facades\Route;
@@ -32,4 +33,5 @@ Route::get('/', function (){
 })->name('welcome');
 
 Route::get('/raffle-draw', RaffleDraw::class);
+Route::get('/pop-culture-icon', PopCultureIconVote::class);
 
