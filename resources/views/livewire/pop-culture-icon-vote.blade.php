@@ -17,6 +17,40 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
+
+        .view-card {
+            cursor: pointer;
+            /* height: 320px;
+            width: 200px; */
+            perspective: 1000px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: rotate 500ms linear;
+        }
+
+        .view-card.show {
+            rotate: y 180deg;
+        }
+
+        .view-card-front,
+        .view-card-back {
+            backface-visibility: hidden;
+            /* border: 5px solid #000000; */
+            display: grid;
+            inset: 0;
+            padding: 0.5em;
+            place-content: center;
+            position: absolute;
+        }
+
+        .view-card-front {
+            /* background-color: pink; */
+        }
+
+        .view-card-back {
+            /* background-color: aliceblue; */
+            rotate: y 180deg;
+        }
     </style>
     {{-- <x-background /> --}}
     <div class="w-full flex flex-col justify-center">
@@ -134,12 +168,23 @@
                     <img src="{{asset('img/popcultureicon.png')}}" alt="">
                 </div>
                 <div class="text-white text-center my-5">Tap photo to reveal Inspiration</div>
-                <div class="h-[450px] w-full flex justify-center">
-                    <img
-                        class="h-full max-w-full rounded-lg"
-                        src="https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=927&amp;q=80"
-                        alt="gallery-photo"
-                    />
+                <div class="h-full w-full flex justify-center">
+                    <button class="view-card w-[300px] h-[430px]">
+                        <div class="view-card-front object-cover">
+                            <img
+                                class="object-cover rounded-lg"
+                                src="https://images.unsplash.com/photo-1552960562-daf630e9278b?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=687&amp;q=80"
+                                alt="gallery-photo"
+                            />
+                        </div>
+                        <div class="view-card-back object-cover">
+                            <img
+                            class="object-cover rounded-lg"
+                            src="https://images.unsplash.com/photo-1552960562-daf630e9278b?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=687&amp;q=80"
+                            alt="gallery-photo"
+                        />
+                        </div>
+                    </button>
                 </div>
                 <div class="flex flex-row justify-center items-center mt-4 gap-3">
                     <div class="relative mb-3 text-white" data-twe-input-wrapper-init>
@@ -179,6 +224,7 @@
     </div>
 
     <script>
+        // const Swal = require('sweetalert2');
         var openmodal = document.querySelectorAll('.modal-open')
         for (var i = 0; i < openmodal.length; i++) {
           openmodal[i].addEventListener('click', function(event){
@@ -216,6 +262,14 @@
           modal.classList.toggle('pointer-events-none')
           body.classList.toggle('modal-active')
         }
+
+
+        const card = document.querySelector(".view-card");
+
+        card.addEventListener("click", function () {
+            card.classList.toggle("show");
+        });
+
     </script>
 
 
