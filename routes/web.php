@@ -1,7 +1,9 @@
 <?php
 
+use App\Events\DrawRaffle;
 use App\Livewire\PollVotes;
 use App\Livewire\RaffleDraw;
+use App\Models\Prizes;
 use Illuminate\Support\Facades\Route;
 
 //Route::get('/', function () {
@@ -30,3 +32,9 @@ Route::get('/', function (){
 })->name('welcome');
 
 Route::get('/raffle-draw', RaffleDraw::class);
+Route::get('/draw', function(){
+    dd(Prizes::find(2)->employee_names);
+    event(new DrawRaffle());
+    DrawRaffle::dispatch();
+    dd('done');
+});
