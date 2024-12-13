@@ -11,4 +11,8 @@ class Checkin extends Model
       'name',
     ];
 
+    public function employee(){
+      return $this->belongsTo(Employees::class);
+    }
+
 }

@@ -32,9 +32,4 @@ Route::get('/', function (){
 })->name('welcome');
 
 Route::get('/raffle-draw', RaffleDraw::class);
-Route::get('/draw', function(){
-    dd(Prizes::find(2)->employee_names);
-    event(new DrawRaffle());
-    DrawRaffle::dispatch();
-    dd('done');
-});
+

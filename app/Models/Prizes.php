@@ -22,14 +22,9 @@ class Prizes extends Model implements HasMedia
 
     protected $appends = [
         'employees',
-        'employee_names',
     ];
 
     public function getEmployeesAttribute(){
         return Employees::whereIn('company', $this->companies)->get();
-    }
-    
-    public function getEmployeeNamesAttribute(){
-        return Employees::whereIn('company', $this->companies)->get()->pluck('name')->toArray();
     }
 }

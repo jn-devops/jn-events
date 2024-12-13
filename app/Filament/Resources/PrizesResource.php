@@ -26,11 +26,15 @@ class PrizesResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->columns(2)
+            ->columns(6)
             ->schema([
                 TextInput::make('description')
-                    ->columnSpan(1)
+                    ->columnSpan(4)
                     ->label('Name'),
+                TextInput::make('winner_count')
+                    ->columnSpan(2)
+                    ->numeric()
+                    ->label('Number of Winners'),
                 Select::make('companies')
                     ->options([
                         'RLI' => 'RLI',
@@ -59,8 +63,30 @@ class PrizesResource extends Resource
                         ]))
                     )
                     ->multiple()
-                    ->columnSpan(1)
+                    ->columnSpan(6)
                     ->label('Companies'),
+                // Select::make('units')
+                //     ->options([
+                //         'PDU' => 'PDU',
+                //         'LIO' => 'LIO',
+                //         'PCU' => 'PCU',
+                //         'DDU' => 'DDU',
+                //         'EMO' => 'EMO',
+                //     ])
+                //     ->hintAction(fn (Select $component) => Forms\Components\Actions\Action::make('select all')
+                //         ->action(fn () => $component->state([
+                //             'PDU' => 'PDU',
+                //             'LIO' => 'LIO',
+                //             'PCU' => 'PCU',
+                //             'DDU' => 'DDU',
+                //             'EMO' => 'EMO',
+                //         ]))
+                //     )
+                //     ->multiple()
+                //     ->columnSpan(1)
+                //     ->hint("IF APPLICABLE")
+                //     ->columnSpan(3)
+                //     ->label('Units'),
                 FileUpload::make('image')
                     ->image()
                     ->label('Image')

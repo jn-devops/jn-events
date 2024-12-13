@@ -46,8 +46,8 @@
                                 </div>
                             </div>
                         </div>
-                        <button id="choose-winner" class="rgb-button mb-5 text-white w-64 cursor-pointer font-bold py-4 px-8 rounded-full shadow-lg transform duration-1000 hover:scale-105 transition-all ease-in-out">
-                            <div id="grand_winner"> Reveal the Winner </div>
+                        <button id="choose-winner" wire:click="draw" class="rgb-button mb-5 text-white w-64 cursor-pointer font-bold py-4 px-8 rounded-full shadow-lg transform duration-1000 hover:scale-105 transition-all ease-in-out">
+                            <div id="grand_winner" wire:ignore> Reveal the Winner </div>
                         </button>
                     </div>
                 </div>
@@ -58,6 +58,7 @@
             <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.10.1/echo.min.js"></script>
             <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+
             <script type="text/javascript">
                 var snd = new Audio("sounds/DrumRoll.mp3");
                 var winnersnd = new Audio("sounds/Winner.mp3")
@@ -88,8 +89,6 @@
                         shapes: ["circle"],
                     });
                 }
-        
-        
                 function rand(min,max){
                     return Math.floor(Math.random() * (max-min+1)) + min;
                 }
@@ -100,16 +99,15 @@
                         choose_btn = document.getElementById('choose-winner'),
                         last_winner;
         
-                    choose_btn.addEventListener('click' , function(){
+                    window.addEventListener('start-draw', event => {
                         $('#winner span').removeClass("winner");
-                        var participants = @this.employee_names;
+                        var participants = event.detail[0];
                         get_winner(participants);
                         // $('#choose-winner').hide();
                         // choose_btn.classList.toggle('w-80')
                         // choose_btn.classList.toggle('h-24')
                         choose_btn.classList.add('zoom');
-                        
-                    } , false);
+                    });
         
                     function get_winner(names){
                         var index = -1 , looper;
@@ -138,7 +136,7 @@
                             snd.pause();    
                             winnersnd.play();
                             clapping.play();
-                        } , 300); // Adjust the timer for picking the winner
+                        } , 5000); // Adjust the timer for picking the winner
                         // } , rand(350 , 25000)); // Adjust the timer for picking the winner
         
         
