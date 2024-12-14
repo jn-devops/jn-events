@@ -50,7 +50,7 @@ class CheckinResource extends Resource
             ->defaultSort('created_at','desc')
             ->persistFiltersInSession()
             ->columns([
-                Tables\Columns\TextColumn::make('employee_id')
+                Tables\Columns\TextColumn::make('employee_id_number')
                     ->label('Employee ID')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
