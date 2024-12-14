@@ -22,5 +22,6 @@ window.addEventListener('EchoLoaded', () => {
         .on('subscription_succeeded', () => {
             console.log('Successfully subscribed to the private channel: poll-updates');
         });
+
 });
 
