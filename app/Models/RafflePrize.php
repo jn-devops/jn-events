@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Raffle extends Model
+class RafflePrize extends Model
 {
     use HasUuids;
-    protected $fillable = [
-        'name',
-    ];
 
+    protected $fillable = ['raffle_id', 'prize_name','image', 'quantity','companies','units'];
+    protected $casts = [
+        'companies' => 'array',
+        'units' => 'array',
+    ];
     public $incrementing = false;
     protected $keyType = 'uuid';
     protected static function boot()
@@ -25,15 +27,9 @@ class Raffle extends Model
             }
         });
     }
-
-    public function prizes()
+    public function raffle()
     {
-        return $this->hasMany(RafflePrize::class);
-    }
-
-    public function participants()
-    {
-        return $this->hasMany(RaffleParticipant::class);
+        return $this->belongsTo(Raffle::class);
     }
 
     public function winners()
