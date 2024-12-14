@@ -22,6 +22,16 @@ window.addEventListener('EchoLoaded', () => {
         .on('subscription_succeeded', () => {
             console.log('Successfully subscribed to the private channel: poll-updates');
         });
+    window.Echo.private('pop-culture-icon')
+        .listen('.vote.pop.icon', (event) => {
+            console.log('Votes updated:', event);
+            console.log('Poll ID:', event.poll_id);
+            console.log('Votes ID:', event.vote);
+
+        })
+        .on('subscription_succeeded', () => {
+            console.log('Successfully subscribed to the private channel: pop-culture-icon');
+        });
 
 });
 
