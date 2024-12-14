@@ -19,8 +19,19 @@ class Employees extends Model
         'unit',
         'code_1',
     ];
+
+    protected $appends = [
+        'name',
+    ];
+
     public function votes()
     {
         return $this->hasMany(Vote::class, 'employee_id', 'id'); // Define the relationship
     }
+
+    public function getNameAttribute(){
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    
 }

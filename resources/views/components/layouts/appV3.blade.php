@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="{{asset('css/animate.min.css')}}">
     <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet"> 
     @livewireStyles
-    @vite(['resources/js/app.js', "resources/css/app.css", 'resources/sass/stars.scss'])
+    @vite(['resources/js/app.js', "resources/css/app.css", 'resources/sass/starsV2.scss'])
 </head>
-<body>
+<body class="bg-gradient-to-r from-[#0d1d31] to-[#0c0d13]">
     {{ $slot }}
     @livewireScripts
 </body>
