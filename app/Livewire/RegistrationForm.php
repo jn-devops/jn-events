@@ -74,6 +74,7 @@ class RegistrationForm extends Component implements HasForms
 
             $record = Checkin::create([
                 'name' => $employee->first_name.' '.$employee->last_name,
+                'employee_id' => $employee->employee_id??'',
             ]);
 
             $this->form->model($record)->saveRelationships();

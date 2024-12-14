@@ -29,7 +29,7 @@ class CheckinResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('employee_id')
+                Forms\Components\TextInput::make('employee.employee_id')
                     ->label('Employee ID')
                     ->nullable()
                     ->required(),
