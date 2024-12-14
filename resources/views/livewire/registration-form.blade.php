@@ -64,18 +64,18 @@
                     <td class="px-4 py-2">Company</td>
                     <td class="px-4 py-2">{{ $data['company'] ?? '' }}</td>
                 </tr>
-                <tr class="border-b">
-                    <td class="px-4 py-2">Department</td>
-                    <td class="px-4 py-2">{{ $data['department'] ?? '' }}</td>
-                </tr>
+{{--                <tr class="border-b">--}}
+{{--                    <td class="px-4 py-2">Department</td>--}}
+{{--                    <td class="px-4 py-2">{{ $data['department'] ?? '' }}</td>--}}
+{{--                </tr>--}}
                 <tr class="border-b">
                     <td class="px-4 py-2">Unit Group</td>
                     <td class="px-4 py-2">{{ $data['unit_group'] ?? '' }}</td>
                 </tr>
-                <tr class="border-b">
-                    <td class="px-4 py-2">Unit</td>
-                    <td class="px-4 py-2">{{ $data['unit'] ?? '' }}</td>
-                </tr>
+{{--                <tr class="border-b">--}}
+{{--                    <td class="px-4 py-2">Unit</td>--}}
+{{--                    <td class="px-4 py-2">{{ $data['unit'] ?? '' }}</td>--}}
+{{--                </tr>--}}
                 </tbody>
             </table>
 
