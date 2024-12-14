@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class PollOptions extends Model
 {
-    protected $fillable = ['poll_id', 'option','image'];
+    protected $fillable = ['poll_id', 'option','image','icon_image'];
 
     public $incrementing = false;
     protected $keyType = 'uuid';

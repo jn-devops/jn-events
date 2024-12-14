@@ -44,6 +44,10 @@ class PollResource extends Resource
                         Forms\Components\Repeater::make('options')
                             ->relationship()
                             ->schema([
+                                Forms\Components\FileUpload::make('icon_image')
+                                    ->image()
+                                    ->avatar()
+                                    ->required(),
                                 Forms\Components\FileUpload::make('image')
                                     ->image()
                                     ->avatar()
