@@ -54,7 +54,7 @@
                 <tbody>
                 <tr class="border-b">
                     <td class="px-4 py-2">Employee ID</td>
-                    <td class="px-4 py-2">{{ $data['employee_id'] ?? '' }}</td>
+                    <td class="px-4 py-2">{{ $data['employee_id_number'] ?? '' }}</td>
                 </tr>
                 <tr class="border-b">
                     <td class="px-4 py-2">Name</td>
