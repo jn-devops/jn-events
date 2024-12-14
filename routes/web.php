@@ -35,5 +35,5 @@ Route::get('/', function (){
 
 Route::get('/raffle-draw', RaffleDraw::class);
 Route::get('/pop-culture-icon/{poll}', PopCultureIconVote::class);
-Route::get('/live-pop-culture-icon', LivePopCultureIcon::class);
+Route::get('/live-pop-culture-icon/{poll}', LivePopCultureIcon::class);
 

@@ -27,6 +27,20 @@
           border: 5px solid transparent;
           animation: borderGlow 3s infinite, preFlip 1s infinite;
         }
+        .winner_card {
+          position: relative;
+          width: 400px;
+          height: 500px;
+          background-color: #fff;
+          border-radius: 10px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          perspective: 1000px;
+          scroll-snap-align: center;
+          flex-shrink: 0;
+          overflow: hidden;
+          border: 5px solid transparent;
+          animation: borderGlow 3s infinite, preFlip 1s infinite;
+        }
 
         @keyframes borderGlow {
         0% {
@@ -63,6 +77,7 @@
         flex-direction: column;
         align-items: center;
         margin-top: 20px;
+        justify-items: center;
     }
 
     .circle-info {
@@ -182,8 +197,8 @@
 
         }
     </style>
-
-    <div class="flex justify-center mt-10">
+    <x-background />
+    <div class="flex justify-center mt-14">
         <img class="" src="{{asset('img/popcultureicon.png')}}" alt="">
     </div>
     <div class="flex justify-center text-white text-3xl font-bold mt-3">
@@ -191,7 +206,43 @@
     </div>
     <div class="flex justify-center">
         <div class="slider">
-            <div class="card-container">
+            @php
+                $cntr = 1;
+            @endphp
+            @foreach ($votes as $item)
+                @if ($cntr == 2) {{-- Winner--}}
+                    <div class="card-container items-center">
+                        <div class="winner_card">
+                            <div class="card-inner" onclick="toggleFlip(this)" id="winner">
+                                <div class="card-front"><img class="object-cover w-full h-full" src="{{$item['image']}}" alt=""></div>
+                                <div class="card-back"><img class="object-cover w-full h-full" src="{{$item['icon']}}" alt=""></div>
+                            </div>
+                        </div>
+                        <div class="circle-info">
+                            <div class="circle">{{$item['count']}}</div>
+                            <div class="name">{{$item['option']}}</div>
+                        </div>
+                    </div>
+                @else
+                    <div class="card-container">
+                        <div class="card">
+                            <div class="card-inner" onclick="toggleFlip(this)">
+                                <div class="card-front"><img class="object-cover w-full h-full" src="{{$item['image']}}" alt=""></div>
+                                <div class="card-back"><img class="object-cover w-full h-full" src="{{$item['icon']}}" alt=""></div>
+                            </div>
+                        </div>
+                        <div class="circle-info">
+                            <div class="circle">{{$item['count']}}</div>
+                            <div class="name">{{$item['option']}}</div>
+                        </div>
+                    </div>
+
+                @endif
+                @php
+                    $cntr++;
+                @endphp
+            @endforeach
+            {{-- <div class="card-container">
                 <div class="card">
                     <div class="card-inner" onclick="toggleFlip(this)">
                         <div class="card-front">Front 1</div>
@@ -226,14 +277,28 @@
                     <div class="circle">3</div>
                     <div class="name">Alex Brown</div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 
   <script>
-      function toggleFlip(cardInner) {
-          cardInner.classList.toggle('flipped');
-      }
+        function toggleFlip(cardInner) {
+            cardInner.classList.toggle('flipped');
+        }
+        setInterval(() => {
+            document.getElementById('winner').click();
+        }, 5000);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('loaded');
+        
+        window.Echo.private('pop-culture-icon')
+        .listen('.vote.pop.icon', (event) => {
+            console.log(event);
+            
+            @this.call('recordVote', event.votes, event.poll_id)
+        });
+    });
   </script>
     
 </div>
