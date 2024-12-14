@@ -11,7 +11,7 @@
         <form wire:submit="create" class="w-full">
             <div  class="flex justify-center ">
                 <h2 class="text-xl font-bold leading-tight text-gray-800  text-center">
-                    Checkin
+                    Check-in
                 </h2>
 
             </div>
@@ -44,7 +44,7 @@
         :autofocus="false"
         x-on:close-modal.window="$wire.closeModal()">
         <x-slot name="heading">
-            Checkin Complete
+            Check-in Complete
         </x-slot>
         <x-slot name="description">
             Thank you for completing this form!
