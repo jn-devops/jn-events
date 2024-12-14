@@ -111,7 +111,7 @@ class PopCultureIconVote extends Component
     }
 
     public function open_card($option){
-        $this->poll_option_id = $option->id;
+        $this->poll_option_id = $option['id'];
         $this->image = Storage::url($option['image']);
         $this->icon = Storage::url($option['icon_image']);
 
