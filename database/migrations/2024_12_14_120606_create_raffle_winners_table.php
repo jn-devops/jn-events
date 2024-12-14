@@ -21,7 +21,7 @@ return new class extends Migration
 
             $table->foreign('raffle_id')->references('id')->on('raffles')->cascadeOnDelete();
             $table->foreign('raffle_prize_id')->references('id')->on('raffle_prizes')->cascadeOnDelete();
-            $table->foreign('participant_id')->references('id')->on('raffle_participants')->cascadeOnDelete();
+            // $table->foreign('participant_id')->references('id')->on('raffle_participants')->cascadeOnDelete();
         });
     }
 

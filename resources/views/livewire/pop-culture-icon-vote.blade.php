@@ -60,102 +60,54 @@
             </div>
         </div>
         <div class="grid grid-cols-2 gap-4 md:grid-cols-4 px-4 pb-5">
-            <div class="grid gap-4">
-              <div class="modal-open">
-                <img
-                  class="h-auto max-w-full rounded-lg object-cover object-center"
-                  src="https://images.unsplash.com/photo-1432462770865-65b70566d673?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1950&amp;q=80"
-                  alt="gallery-photo"
-                />
+          @php
+              $cntr = 0;
+          @endphp
+            @foreach ($poll->options as $option)
+              @php
+                  $cntr++;
+              @endphp
+              <div class="grid gap-4">
+                <div class="modal-open" wire:click="open_card({{$option}})">
+                  @if ($cntr % 3 == 1)
+                    <img
+                      class="h-auto w-full rounded-lg object-cover object-center"
+                      src="{{Illuminate\Support\Facades\Storage::url($option->image)}}"
+                      alt="gallery-photo"
+                    />
+                  @endif
+                </div>
+                <div class="modal-open" wire:click="open_card({{$option}})">
+                  @if ($cntr % 3 == 2)
+                    <img
+                      class="h-auto w-full rounded-lg object-cover object-center"
+                      src="{{Illuminate\Support\Facades\Storage::url($option->image)}}"
+                      alt="gallery-photo"
+                    />
+                  @endif
+                </div>
+                <div class="modal-open" wire:click="open_card({{$option}})">
+                  @if ($cntr % 3 == 0)
+                    <img
+                      class="h-auto w-full rounded-lg object-cover object-center"
+                      src="{{Illuminate\Support\Facades\Storage::url($option->image)}}"
+                      alt="gallery-photo"
+                    />
+                  @endif
+                </div>
               </div>
-              <div class="modal-open">
-                <img
-                  class="h-auto max-w-full rounded-lg object-cover object-center "
-                  src="https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=927&amp;q=80"
-                  alt="gallery-photo"
-                />
-              </div>
-              <div class="modal-open">
-                <img
-                  class="h-auto max-w-full rounded-lg object-cover object-center"
-                  src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=2940&amp;q=80"
-                  alt="gallery-photo"
-                />
-              </div>
-            </div>
-            <div class="grid gap-4">
-              <div class="modal-open">
-                <img
-                  class="h-auto max-w-full rounded-lg object-cover object-center"
-                  src="https://images.unsplash.com/photo-1552960562-daf630e9278b?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=687&amp;q=80"
-                  alt="gallery-photo"
-                />
-              </div>
-              <div class="modal-open">
-                <img
-                  class="h-auto max-w-full rounded-lg object-cover object-center"
-                  src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80"
-                  alt="gallery-photo"
-                />
-              </div>
-              <div class="modal-open">
-                <img
-                  class="h-auto max-w-full rounded-lg object-cover object-center "
-                  src="https://docs.material-tailwind.com/img/team-3.jpg"
-                  alt="gallery-photo"
-                />
-              </div>
-            </div>
-            <div class="grid gap-4">
-              <div class="modal-open">
-                <img
-                  class="h-auto max-w-full rounded-lg object-cover object-center"
-                  src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=2940&amp;q=80"
-                  alt="gallery-photo"
-                />
-              </div>
-              <div class="modal-open">
-                <img
-                  class="h-auto max-w-full rounded-lg object-cover object-center "
-                  src="https://docs.material-tailwind.com/img/team-3.jpg"
-                  alt="gallery-photo"
-                />
-              </div>
-              <div class="modal-open">
-                <img
-                  class="h-auto max-w-full rounded-lg object-cover object-center"
-                  src="https://images.unsplash.com/photo-1552960562-daf630e9278b?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=687&amp;q=80"
-                  alt="gallery-photo"
-                />
-              </div>
-            </div>
-            <div class="grid gap-4">
-              <div class="modal-open">
-                <img
-                  class="h-auto max-w-full rounded-lg object-cover object-center"
-                  src="https://images.unsplash.com/photo-1552960562-daf630e9278b?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=687&amp;q=80"
-                  alt="gallery-photo"
-                />
-              </div>
-              <div class="modal-open">
-                <img
-                  class="h-auto max-w-full rounded-lg object-cover object-center"
-                  src="https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=927&amp;q=80"
-                  alt="gallery-photo"
-                />
-              </div>
-            </div>
+            @endforeach
         </div>
     </div>
 
     
-    <!--Modal-->
-    <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+    <!--Vote Modal-->
+    <div wire:ignore.self class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
         <div class="modal-overlay absolute w-full h-full bg-[#0d1d31]"></div>
 
         <div class="modal-container fixed w-full h-full z-50 overflow-y-auto ">
             
-            <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+            <div id="main_modal" class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
                 <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
                     <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
                 </svg>
@@ -173,50 +125,64 @@
                         <div class="view-card-front object-cover">
                             <img
                                 class="object-cover rounded-lg"
-                                src="https://images.unsplash.com/photo-1552960562-daf630e9278b?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=687&amp;q=80"
+                                src="{{$image}}"
                                 alt="gallery-photo"
                             />
                         </div>
                         <div class="view-card-back object-cover">
                             <img
                             class="object-cover rounded-lg"
-                            src="https://images.unsplash.com/photo-1552960562-daf630e9278b?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=687&amp;q=80"
+                            src="{{$icon}}"
                             alt="gallery-photo"
                         />
                         </div>
                     </button>
                 </div>
+                @if ($error)
+                  <div class="w-full text-center text-red-500 italic mt-5">
+                    {{$error}}
+                  </div>
+                @endif
                 <div class="flex flex-row justify-center items-center mt-4 gap-3">
-                    <div class="relative mb-3 text-white" data-twe-input-wrapper-init>
-                        <input
-                          type="text"
-                          class="peer block min-h-[auto] w-full rounded border-b-slate-100 border-t-0 border-x-0 border-1 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-black data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none  [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
-                          id="exampleFormControlInputText"
-                          placeholder="Example label" />
-                        <label
-                          for="exampleFormControlInputText"
-                          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-200 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none "
-                          >First Name
-                        </label>
+                    <div class="max-w-sm min-w-[200px] text-white ps-5">
+                      <input  wire:model.live="first_name" class="w-full bg-transparent placeholder:text-slate-400 text-white text-sm border border-b-slate-100 border-t-0 border-x-0 border-1 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="First Name" />
                     </div>
-                    <div class="relative mb-3 text-white" data-twe-input-wrapper-init>
-                        <input
-                          type="text"
-                          class="peer block min-h-[auto] w-full rounded border-b-slate-100 border-t-0 border-x-0 border-1 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-black data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none  [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
-                          id="exampleFormControlInputText"
-                          placeholder="Example label" />
-                        <label
-                          for="exampleFormControlInputText"
-                          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-200 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none "
-                          >Last Name
-                        </label>
+                    <div class="max-w-sm min-w-[200px] text-white pe-5">
+                      <input  wire:model.live="last_name" class="w-full bg-transparent placeholder:text-slate-400 text-white text-sm border border-b-slate-100 border-t-0 border-x-0 border-1 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="Last Name" />
                     </div>
                 </div>
 
                 <div class="flex justify-center mt-6">
-                    <button id="choose-winner" class="rgb-button mb-5 text-white w-64 cursor-pointer font-bold py-4 px-8 rounded-full shadow-lg transform duration-1000 hover:scale-105 transition-all ease-in-out">
+                    <button id="choose-winner" wire:click="vote" class="rgb-button mb-5 text-white w-64 cursor-pointer font-bold py-4 px-8 rounded-full shadow-lg transform duration-1000 hover:scale-105 transition-all ease-in-out">
                         <div id="grand_winner" wire:ignore> VOTE </div>
                     </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <!--Success Modal-->
+    <div wire:ignore.self class="success-modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+        <div class="modal-overlay absolute w-full h-full bg-gradient-to-b from-[#0d1d31] via-[#0d1d31] to-transparent"></div>
+
+        <div class="modal-container fixed w-full h-full z-50 overflow-y-auto ">
+            
+            <div id="success_modal" class="success-modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+                <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                    <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                </svg>
+            </div>
+
+            <!-- Add margin if you want to see grey behind the modal-->
+            <div class="modal-content container mx-auto h-auto text-left p-4">
+                <div class="flex items-center justify-center">
+                  <div class="logo_container mt-7 mb-7 w-48">
+                      <img class="w-full" src="{{asset('img/popcultureicon.png')}}" alt="">
+                  </div>
+                </div>
+                <div class="text-3xl text-white font-bold text-center">
+                  {!! $suucess_message !!}
                 </div>
 
             </div>
@@ -268,6 +234,24 @@
 
         card.addEventListener("click", function () {
             card.classList.toggle("show");
+        });
+
+        var successclosemodal = document.querySelectorAll('.success-modal-close')
+        for (var i = 0; i < successclosemodal.length; i++) {
+          successclosemodal[i].addEventListener('click', toggleSuccess)
+        }
+
+        function toggleSuccess(){
+          const body = document.querySelector('body')
+          const modal = document.querySelector('.success-modal')
+          modal.classList.toggle('opacity-0')
+          modal.classList.toggle('pointer-events-none')
+          body.classList.toggle('modal-active')
+        }
+
+        window.addEventListener('success-modal', event => {
+          toggleModal();
+          toggleSuccess();
         });
 
     </script>
