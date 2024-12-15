@@ -46,7 +46,7 @@ class RaffleDraw extends Component
                 $query->whereIn('company', $prize->companies)
                     ->whereIn('unit', $prize->units);
             })
-                ->whereNotIn('employee_id',RaffleWinner::where('raffle_prize_id',$prize->id)->where('raffle_id',$prize->raffle->id)->pluck('id'))
+                ->whereNotIn('employee_id',RaffleWinner::where('raffle_prize_id',$prize->id)->where('raffle_id',$prize->raffle->id)->pluck('employee_id'))
                 ->get();
             $this->employee_names = $checkins->pluck('name');
             // dd($checkins);
