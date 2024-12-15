@@ -29,6 +29,9 @@ class EmployeesResource extends Resource
                 Forms\Components\TextInput::make('company')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('table_number')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('last_name')
                     ->required()
                     ->maxLength(255),
@@ -78,7 +81,9 @@ class EmployeesResource extends Resource
                         ->using(fn (\Illuminate\Database\Query\Builder $query): string => $query->count('employee_id'))
                     )
                     ->searchable(),
-
+                Tables\Columns\TextColumn::make('table_number')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('last_name')
                     ->sortable()
                     ->searchable(),
