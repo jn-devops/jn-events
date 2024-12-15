@@ -46,10 +46,12 @@ class PollResource extends Resource
                             ->schema([
                                 Forms\Components\FileUpload::make('icon_image')
                                     ->image()
+                                    ->downloadable()
 //                                    ->required()
                                     ->columnSpan(2),
                                 Forms\Components\FileUpload::make('image')
                                     ->image()
+                                    ->downloadable()
 //                                    ->required()
                                     ->columnSpan(2),
                                 Forms\Components\TextInput::make('option')
