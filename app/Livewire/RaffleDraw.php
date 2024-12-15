@@ -60,11 +60,17 @@ class RaffleDraw extends Component
     }
     public function setWinner(RafflePrize $prize){
         if($this->chosen_prize_model==$prize) {
-            RaffleWinner::create([
-                'employee_id' => Checkin::where('name', $this->winner)->first()->employee_id,
-                'raffle_id' => $this->chosen_prize_model->raffle_id,
-                'raffle_prize_id' => $this->chosen_prize_model->id,
-            ]);
+            $has_win_before = RaffleWinner::where('employee_id',Checkin::where('name', $this->winner)->first()->employee_id)
+                                ->where('raffle_id',$this->chosen_prize_model->raffle_id)
+                                ->where('raffle_prize_id',$this->chosen_prize_model->id)
+            ->first();
+            if(!$has_win_before){
+                RaffleWinner::create([
+                    'employee_id' => Checkin::where('name', $this->winner)->first()->employee_id,
+                    'raffle_id' => $this->chosen_prize_model->raffle_id,
+                    'raffle_prize_id' => $this->chosen_prize_model->id,
+                ]);
+            }
         }
     }
 }
