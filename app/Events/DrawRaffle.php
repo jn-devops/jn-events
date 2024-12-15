@@ -14,12 +14,15 @@ class DrawRaffle implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * Create a new event instance.
-     */
-    public function __construct()
+    public $prize;
+    public function __construct($prize)
     {
-        //
+        $this->prize = $prize;
+        \Log::info('Draw Raffle event fired', [
+            'prize' => $prize,
+            'channel' => $this->broadcastOn(),
+            'event' => $this->broadcastAs(),
+        ]);
     }
 
     /**
@@ -29,7 +32,9 @@ class DrawRaffle implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['draw-channel'];
+        return [
+            new PrivateChannel('draw-raffle'),
+        ];
     }
 
     public function broadcastAs()

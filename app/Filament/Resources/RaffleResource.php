@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Events\DrawRaffle;
 use App\Events\SetRafflePrize;
 use App\Events\VoteUpdated;
 use App\Filament\Resources\RaffleResource\Pages;
@@ -57,7 +58,9 @@ class RaffleResource extends Resource
                                     ->columnSpan(1),
                                 Forms\Components\Select::make('companies')
                                     ->multiple()
-                                    ->options(Employees::select('company')->distinct()->pluck('company'))
+                                    ->options(Employees::select('company')->distinct()->pluck('company')->mapWithKeys(function ($company) {
+                                        return [$company => $company];
+                                    })->toArray())
                                     ->required()
                                 ->columnSpan(3),
                                 Forms\Components\Select::make('units')
@@ -98,7 +101,17 @@ class RaffleResource extends Resource
                                         }catch (\Exception $exception){
                                             throw new $exception;
                                         }
-
+                                    }),
+                                Action::make('drawRaffle')
+                                    ->button()
+                                    ->label('Draw Raffle')
+                                    ->action(function (array $arguments, Forms\Components\Repeater $component): void {
+                                        $itemData = $component->getItemState($arguments['item']);
+                                        try {
+                                            broadcast(new DrawRaffle($itemData['id']));
+                                        }catch (\Exception $exception){
+                                            throw new $exception;
+                                        }
                                     }),
                             ])
                             ->columns(3)

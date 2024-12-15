@@ -14,3 +14,6 @@ Broadcast::channel('pop-culture-icon', function ($user) {
 Broadcast::channel('set-raffle-prize', function ($user) {
     return true; // Add your logic here, e.g., check user permissions
 });
+Broadcast::channel('draw-raffle', function ($user) {
+    return true; // Add your logic here, e.g., check user permissions
+});

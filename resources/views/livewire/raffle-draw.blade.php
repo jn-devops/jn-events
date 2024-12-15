@@ -150,8 +150,15 @@
                     window.Echo.private('set-raffle-prize')
                         .listen('.set-raffle-prize', (event) => {
                             console.log('set-raffle-prize');
-                            console.log(event);
+                            console.log(event.prize);
+                            @this.call('setCurrentPrize',event.prize);
+                        });
 
+                    window.Echo.private('draw-raffle')
+                        .listen('.draw-raffle', (event) => {
+                            console.log('draw-raffle');
+                            console.log(event.prize);
+                        @this.call('draw',event.prize);
                         });
                 });
                 // window.Echo.channel('draw-channel')
