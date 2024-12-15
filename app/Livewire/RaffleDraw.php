@@ -77,6 +77,7 @@ class RaffleDraw extends Component
                     'raffle_id' => $this->chosen_prize_model->raffle_id,
                     'raffle_prize_id' => $this->chosen_prize_model->id,
                 ]);
+                $this->winner='';
             }
         }
     }
