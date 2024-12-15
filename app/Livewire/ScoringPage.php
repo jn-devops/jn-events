@@ -13,11 +13,14 @@ class ScoringPage extends Component
     public $judge;
     public $participants;
     public $currentParticipant;
+    public $category;
+    public $currrentCategory;
 
     public $score = [
         'voice_quality' => 0,
-        'style_performance' => 0,
-        'audience_poll' => 0,
+        'stage_presence' => 0,
+        'interpretation' => 0,
+        'audience_impact' => 0,
     ];
     public $totalScore = 0;
     public function calculateTotal()
@@ -36,17 +39,25 @@ class ScoringPage extends Component
             'competition_id' => $this->competition->id,
             'judge_id' => $this->judge->id,
             'participant_id' => $this->currentParticipant->id,
-            'criteria' => 'style_performance',
+            'criteria' => 'stage_presence',
         ],[
-            'score' => $this->score['style_performance'],
+            'score' => $this->score['stage_presence'],
         ]);
         Score::updateOrCreate([
             'competition_id' => $this->competition->id,
             'judge_id' => $this->judge->id,
             'participant_id' => $this->currentParticipant->id,
-            'criteria' => 'audience_poll',
+            'criteria' => 'interpretation',
         ],[
-            'score' => $this->score['audience_poll'],
+            'score' => $this->score['interpretation'],
+        ]);
+        Score::updateOrCreate([
+            'competition_id' => $this->competition->id,
+            'judge_id' => $this->judge->id,
+            'participant_id' => $this->currentParticipant->id,
+            'criteria' => 'audience_impact',
+        ],[
+            'score' => $this->score['audience_impact'],
         ]);
     }
 
@@ -64,17 +75,25 @@ class ScoringPage extends Component
             'competition_id' => $this->competition->id,
             'judge_id' => $this->judge->id,
             'participant_id' => $this->currentParticipant->id,
-            'criteria' => 'style_performance',
+            'criteria' => 'stage_presence',
         ],[
-            'score' => 0,
+            'score' => $this->score['stage_presence'],
         ]);
         Score::updateOrCreate([
             'competition_id' => $this->competition->id,
             'judge_id' => $this->judge->id,
             'participant_id' => $this->currentParticipant->id,
-            'criteria' => 'audience_poll',
+            'criteria' => 'interpretation',
         ],[
-            'score' => 0,
+            'score' => $this->score['interpretation'],
+        ]);
+        Score::updateOrCreate([
+            'competition_id' => $this->competition->id,
+            'judge_id' => $this->judge->id,
+            'participant_id' => $this->currentParticipant->id,
+            'criteria' => 'audience_impact',
+        ],[
+            'score' => $this->score['audience_impact'],
         ]);
         $this->score = [
             'voice_quality' => 0,
@@ -86,22 +105,29 @@ class ScoringPage extends Component
 
     public function mount(Competition $competition,CompetitionJudge $judge)
     {
-        $this->$competition = $competition;
+        $this->competition = $competition;
+        $this->category = $competition->participants()
+                        ->select('category')
+                        ->distinct()
+                        ->pluck('category');
         $this->judge = $judge;
         $this->participants = $competition->participants;
         $this->currentParticipant=$this->participants->first();
+        $this->currrentCategory = 'all';
         $current_score=$this->currentParticipant->scores;
         if($current_score->count()==0){
             $this->score = [
                 'voice_quality' => 0,
-                'style_performance' => 0,
-                'audience_poll' => 0,
+                'stage_presence' => 0,
+                'interpretation' => 0,
+                'audience_impact' => 0,
             ];
         }else{
             $this->score = [
                 'voice_quality' => $current_score->where('criteria','voice_quality')->first()->score??0,
-                'style_performance' => $current_score->where('criteria','style_performance')->first()->score??0,
-                'audience_poll' => $current_score->where('criteria','audience_poll')->first()->score??0,
+                'stage_presence' => $current_score->where('criteria','stage_presence')->first()->score??0,
+                'interpretation' => $current_score->where('criteria','interpretation')->first()->score??0,
+                'audience_impact' => $current_score->where('criteria','audience_impact')->first()->score??0,
             ];
         }
         $this->calculateTotal();
@@ -114,20 +140,33 @@ class ScoringPage extends Component
         if($current_score->count()==0){
             $this->score = [
                 'voice_quality' => 0,
-                'style_performance' => 0,
-                'audience_poll' => 0,
+                'stage_presence' => 0,
+                'interpretation' => 0,
+                'audience_impact' => 0,
             ];
         }else{
             $this->score = [
                 'voice_quality' => $current_score->where('criteria','voice_quality')->first()->score??0,
-                'style_performance' => $current_score->where('criteria','style_performance')->first()->score??0,
-                'audience_poll' => $current_score->where('criteria','audience_poll')->first()->score??0,
+                'stage_presence' => $current_score->where('criteria','stage_presence')->first()->score??0,
+                'interpretation' => $current_score->where('criteria','interpretation')->first()->score??0,
+                'audience_impact' => $current_score->where('criteria','audience_impact')->first()->score??0,
             ];
         }
         $this->calculateTotal();
     }
     public function render()
     {
-        return view('livewire.scoring-page');
+        return view('livewire.scoring-page')
+        ->layout('components.layouts.appV3');
+    }
+
+    public function category_filter($category){
+        if($category != 'all'){
+            $this->participants = $this->competition->participants()->where('category', $category)->get();
+        }else{
+            $this->participants = $this->competition->participants;
+        }
+        $this->changeParticipant($this->participants[0]->id);
+        $this->currrentCategory = $category;
     }
 }
