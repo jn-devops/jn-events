@@ -45,6 +45,7 @@ class CompetitionResource extends Resource
                         ->schema([
                             Forms\Components\FileUpload::make('image')
                                 ->image()
+                                ->imageEditor()
                                 ->required(),
                             Forms\Components\TextInput::make('name')
                                 ->required()
