@@ -1,4 +1,5 @@
 <div>
+  @if ($poll->active)
     <style>
         .modal {
             transition: opacity 0.25s ease;
@@ -257,6 +258,10 @@
 
     </script>
 
-
+  @else
+    <div class="flex justify-center text-white pt-10">
+      Voting is not yet started
+    </div>    
+  @endif
 
 </div>
