@@ -17,3 +17,6 @@ Broadcast::channel('set-raffle-prize', function ($user) {
 Broadcast::channel('draw-raffle', function ($user) {
     return true; // Add your logic here, e.g., check user permissions
 });
+Broadcast::channel('set-winner', function ($user) {
+    return true; // Add your logic here, e.g., check user permissions
+});

@@ -150,6 +150,13 @@
                             console.log(event.prize);
                         @this.call('draw',event.prize);
                         });
+
+                    window.Echo.private('set-winner')
+                        .listen('.set-winner', (event) => {
+                            console.log('set-winner');
+                            console.log(event);
+                            @this.call('setWinner',event.prize);
+                        });
                 });
                 // window.Echo.channel('draw-channel')
                 // .listen('draw-raffle', (e) => {
