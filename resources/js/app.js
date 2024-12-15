@@ -33,5 +33,22 @@ window.addEventListener('EchoLoaded', () => {
             console.log('Successfully subscribed to the private channel: pop-culture-icon');
         });
 
+    window.Echo.private('set-raffle-prize')
+        .listen('.set-raffle-prize', (event) => {
+            console.log('set-raffle-prize:', event);
+            // Get the Livewire component's $wire object
+            const livewireComponent = document.querySelector('[wire\\:id]');
+            if (livewireComponent) {
+                const wire = Livewire.find(livewireComponent.getAttribute('wire:id'));
+                wire.dispatch('setCurrentPrize',{event}); // Dispatch the event
+            } else {
+                console.error('Livewire component not found.');
+            }
+
+        })
+        .on('subscription_succeeded', () => {
+            console.log('Successfully subscribed to the private channel: set-raffle-prize');
+        });
+
 });
 

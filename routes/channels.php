@@ -11,3 +11,6 @@ Broadcast::channel('poll-updates', function ($user) {
 Broadcast::channel('pop-culture-icon', function ($user) {
     return true; // Add your logic here, e.g., check user permissions
 });
+Broadcast::channel('set-raffle-prize', function ($user) {
+    return true; // Add your logic here, e.g., check user permissions
+});

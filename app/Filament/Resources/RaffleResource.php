@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use App\Events\SetRafflePrize;
+use App\Events\VoteUpdated;
 use App\Filament\Resources\RaffleResource\Pages;
 use App\Filament\Resources\RaffleResource\RelationManagers;
 use App\Models\Employees;
@@ -38,6 +40,9 @@ class RaffleResource extends Resource
                         Forms\Components\Repeater::make('prizes')
                             ->relationship()
                             ->schema([
+                                Forms\Components\TextInput::make('id')
+                                    ->columnSpanFull()
+                                    ->readonly(),
                                 Forms\Components\FileUpload::make('image')
                                     ->image()
                                     ->required()
@@ -82,12 +87,27 @@ class RaffleResource extends Resource
 //                                    })
                                     ->columnSpan(3),
                             ])
+                            ->extraItemActions([
+                                Action::make('setCurrentPrize')
+                                    ->button()
+                                    ->label('Set As Current Prize')
+                                    ->action(function (array $arguments, Forms\Components\Repeater $component): void {
+                                        $itemData = $component->getItemState($arguments['item']);
+                                        try {
+                                            broadcast(new SetRafflePrize($itemData['id']));
+                                        }catch (\Exception $exception){
+                                            throw new $exception;
+                                        }
+
+                                    }),
+                            ])
                             ->columns(3)
                             ->columnSpanFull()
                     ])
                     ->columns(12)->columnSpan(2),
                 Forms\Components\Section::make()
                     ->schema([
+
                         Placeholder::make('created_at')
                             ->content(fn ($record) => $record?->created_at?->diffForHumans() ?? new HtmlString('&mdash;')),
 

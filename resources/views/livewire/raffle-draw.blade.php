@@ -52,9 +52,9 @@
                     </div>
                 </div>
             </div>
-            
-            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-            <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.min.js"></script>
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.10.1/echo.min.js"></script>
             <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
@@ -63,7 +63,7 @@
                 var snd = new Audio("sounds/DrumRoll.mp3");
                 var winnersnd = new Audio("sounds/Winner.mp3")
                 var clapping = new Audio("sounds/Clapping.mp3")
-        
+
                 const defaults = {
                     spread: 360,
                     ticks: 50,
@@ -73,7 +73,7 @@
                     shapes: ["star"],
                     colors: ["FFE400", "FFBD00", "E89400", "FFCA6C", "FDFFB8"],
                 };
-        
+
                 function shoot() {
                     confetti({
                         ...defaults,
@@ -81,7 +81,7 @@
                         scalar: 1.2,
                         shapes: ["star"],
                     });
-        
+
                     confetti({
                         ...defaults,
                         particleCount: 10,
@@ -92,13 +92,13 @@
                 function rand(min,max){
                     return Math.floor(Math.random() * (max-min+1)) + min;
                 }
-        
+
                 (function(document,undefined){
                     $("#confetti").css("display", "none");
                     var grand_winner = document.querySelector('#grand_winner'),
                         choose_btn = document.getElementById('choose-winner'),
                         last_winner;
-        
+
                     window.addEventListener('start-draw', event => {
                         $('#winner span').removeClass("winner");
                         var participants = event.detail[0];
@@ -108,7 +108,7 @@
                         // choose_btn.classList.toggle('h-24')
                         choose_btn.classList.add('zoom');
                     });
-        
+
                     function get_winner(names){
                         var index = -1 , looper;
                         (function __cycle(){
@@ -133,33 +133,33 @@
                             setTimeout(shoot, 200);
                             setTimeout(shoot, 200);
                             setTimeout(shoot, 200);
-                            snd.pause();    
+                            snd.pause();
                             winnersnd.play();
                             clapping.play();
                         } , 5000); // Adjust the timer for picking the winner
                         // } , rand(350 , 25000)); // Adjust the timer for picking the winner
-        
-        
+
+
                     }
                 })(document);
-        
+
                 Pusher.logToConsole = true;
-        
-                var pusher = new Pusher('72090a5cd35fbf591321', {
-                    cluster: 'ap1'
+                document.addEventListener('DOMContentLoaded', function () {
+                    console.log('loaded');
+
+                    window.Echo.private('set-raffle-prize')
+                        .listen('.set-raffle-prize', (event) => {
+                            console.log('set-raffle-prize');
+                            console.log(event);
+
+                        });
                 });
-        
-                var channel = pusher.subscribe('draw-channel');
-                channel.bind('draw-raffle', function(data) {
-                    alert(JSON.stringify(data));
-                });
-        
                 // window.Echo.channel('draw-channel')
                 // .listen('draw-raffle', (e) => {
                 //     alert("Broadcast Received: ");
                 // });
             </script>
-        
+
         </div>
     </div>
 </div>

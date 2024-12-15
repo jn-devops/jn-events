@@ -44,11 +44,11 @@
                     Submit
                 </x-filament::button>
             </div>
-{{--            <div class="flex justify-center ">--}}
-{{--                <x-filament::button wire:click="sendNotification" class="mt-4  text-white py-2 px-4 rounded mx-auto w-60">--}}
-{{--                    Test Notificaiton--}}
-{{--                </x-filament::button>--}}
-{{--            </div>--}}
+            <div class="flex justify-center ">
+                <x-filament::button wire:click="sendNotification" class="mt-4  text-white py-2 px-4 rounded mx-auto w-60">
+                    Test Notificaiton
+                </x-filament::button>
+            </div>
         </form>
 
 

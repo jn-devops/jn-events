@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\DrawRaffle;
+use App\Events\SetRafflePrize;
 use App\Livewire\LivePopCultureIcon;
 use App\Livewire\PollVotes;
 use App\Livewire\PopCultureIconVote;
@@ -36,4 +37,5 @@ Route::get('/', function (){
 Route::get('/raffle-draw', RaffleDraw::class);
 Route::get('/pop-culture-icon/{poll}', PopCultureIconVote::class);
 Route::get('/live-pop-culture-icon/{poll}', LivePopCultureIcon::class);
+
 

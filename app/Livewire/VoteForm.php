@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Events\SetRafflePrize;
 use App\Events\VoteUpdated;
 use App\Models\Checkin;
 use App\Models\Employees;
@@ -128,7 +129,9 @@ class VoteForm extends Component implements HasForms
     }
 
     public function sendNotification(){
-//        broadcast(new VoteUpdated('test', 'test'));
+        broadcast(new VoteUpdated('test', 'test'));
+        broadcast(new SetRafflePrize('test'));
+
 //        foreach (User::all() as $recipient) {
 ////            $recipient->notify(
 ////                Notification::make()
