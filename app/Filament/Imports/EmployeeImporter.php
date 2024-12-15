@@ -47,6 +47,9 @@ class EmployeeImporter extends Importer
             ImportColumn::make('code_1')
                 ->label("Code1")
                 ->requiredMapping(),
+            ImportColumn::make('table_number')
+                ->label("TableNumber")
+                ->requiredMapping(),
         ];
     }
 

@@ -18,6 +18,7 @@ class Employees extends Model
         'code',
         'unit',
         'code_1',
+        'table_number'
     ];
 
     protected $appends = [
@@ -33,5 +34,5 @@ class Employees extends Model
         return $this->first_name . ' ' . $this->last_name;
     }
 
-    
+
 }
