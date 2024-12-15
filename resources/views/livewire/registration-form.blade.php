@@ -19,17 +19,12 @@
         }
     </style>
     <x-background />
-    <div class="flex justify-center mt-20">
+    <div class="flex justify-center mt-32">
         <div class="logo_container">
-            <img src="{{asset('img/joynostalglogo.png')}}" alt="JN Logo" class="mt-5 w-24">
-            <h1 class="main_text1-v2" style="font-size: 5em;">
-                <span>CHRISTMAS</span>
-                <span>CHRISTMAS</span>
-            </h1>
-            <h2 class="sub_text1">Party 2024</h2>
+            <img src="{{asset('img/christmas_party_logo.png')}}" alt="JN Logo" class="mt-5 w-52">
         </div>
     </div>
-    <div class="flex justify-center text-white font-bold text-2xl mt-20 mb-9">
+    <div class="flex justify-center text-white font-bold text-2xl mt-3 mb-9">
         REGISTRATION FORM
     </div>
     <div class="form_container gap-4">
