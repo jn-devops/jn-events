@@ -16,6 +16,7 @@ class ScoreBoard extends Component
 
     public function render()
     {
-        return view('livewire.score-board');
+        return view('livewire.score-board')
+            ->layout('components.layouts.appV3');
     }
 }

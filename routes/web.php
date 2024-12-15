@@ -17,6 +17,7 @@ Route::get('/attendance', \App\Livewire\RegistrationForm::class)->name('registra
 Route::get('/vote/{poll}', \App\Livewire\VoteForm::class)->name('vote-form');
 Route::get('/polls/{poll}/votes', PollVotes::class)->name('poll.votes');
 Route::get('/competition/{competition}/{judge}/{judge_name}', \App\Livewire\ScoringPage::class)->name('competition-scoring');
+Route::get('/competition-score-board/{competition}', \App\Livewire\ScoreBoard::class);
 
 Route::get('/', function (){
     $current_program = \App\Models\Programs::where('active', 1)->first();
