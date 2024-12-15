@@ -53,8 +53,14 @@ class RaffleDraw extends Component
             $checkins=$checkins->whereNotIn('employee_id',RaffleWinner::pluck('employee_id'))->get();
 
             $this->employee_names = $checkins->pluck('name');
+
+            if(!empty($this->employee_names)){
+                $this->dispatch('start-draw', $this->employee_names);
+            }
+
+
             // dd($checkins);
-            $this->dispatch('start-draw', $this->employee_names);
+
 //            dd($this->employee_names,$checkins,$prize->companies,$prize->units);
 //            $this->employee_names = ['George', 'Samuel', 'Rey', 'Justin'];
 //            $this->dispatch('start-draw', $this->employee_names);
