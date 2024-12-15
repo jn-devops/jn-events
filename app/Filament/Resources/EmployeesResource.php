@@ -29,6 +29,8 @@ class EmployeesResource extends Resource
                 Forms\Components\TextInput::make('company')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('unit')
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('table_number')
                     ->required()
                     ->maxLength(255),
@@ -48,8 +50,7 @@ class EmployeesResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('code')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('unit')
-                    ->maxLength(255),
+
                 Forms\Components\TextInput::make('code_1')
                     ->maxLength(255),
             ]);
@@ -67,6 +68,9 @@ class EmployeesResource extends Resource
             ->defaultPaginationPageOption(50)
             ->columns([
                 Tables\Columns\TextColumn::make('company')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('unit')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('employee_id')
@@ -105,9 +109,7 @@ class EmployeesResource extends Resource
                 Tables\Columns\TextColumn::make('code')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('unit')
-                    ->sortable()
-                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('code_1')
                     ->sortable()
                     ->searchable(),
