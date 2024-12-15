@@ -47,10 +47,12 @@ class PollResource extends Resource
                                 Forms\Components\FileUpload::make('icon_image')
                                     ->image()
                                     ->downloadable()
+                                    ->imageEditor()
 //                                    ->required()
                                     ->columnSpan(2),
                                 Forms\Components\FileUpload::make('image')
                                     ->image()
+                                    ->imageEditor()
                                     ->downloadable()
 //                                    ->required()
                                     ->columnSpan(2),
