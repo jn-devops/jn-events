@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Events\DrawRaffle;
 use App\Events\SetRafflePrize;
+use App\Events\SetWinner;
 use App\Events\VoteUpdated;
 use App\Filament\Resources\RaffleResource\Pages;
 use App\Filament\Resources\RaffleResource\RelationManagers;
@@ -109,6 +110,17 @@ class RaffleResource extends Resource
                                         $itemData = $component->getItemState($arguments['item']);
                                         try {
                                             broadcast(new DrawRaffle($itemData['id']));
+                                        }catch (\Exception $exception){
+                                            throw new $exception;
+                                        }
+                                    }),
+                                Action::make('setWinner')
+                                    ->button()
+                                    ->label('Set Winner')
+                                    ->action(function (array $arguments, Forms\Components\Repeater $component): void {
+                                        $itemData = $component->getItemState($arguments['item']);
+                                        try {
+                                            broadcast(new SetWinner($itemData['id']));
                                         }catch (\Exception $exception){
                                             throw new $exception;
                                         }
