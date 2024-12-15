@@ -66,7 +66,10 @@ class RaffleDraw extends Component
 //                                ->where('raffle_id',$this->chosen_prize_model->raffle_id)
 //                                ->where('raffle_prize_id',$this->chosen_prize_model->id)
                             ->first();
-            if(!$has_win_before){
+            $winner_count = RaffleWinner::where('raffle_id',$this->chosen_prize_model->raffle_id)
+                                ->where('raffle_prize_id',$this->chosen_prize_model->id)
+                            ->count();
+            if(!$has_win_before && $winner_count<=$prize->quantity){
                 RaffleWinner::create([
                     'employee_id' => Checkin::where('name', $this->winner)->first()->employee_id,
                     'raffle_id' => $this->chosen_prize_model->raffle_id,
