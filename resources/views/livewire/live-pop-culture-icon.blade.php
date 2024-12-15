@@ -210,7 +210,7 @@
                 $cntr = 1;
             @endphp
             @foreach ($votes as $item)
-                @if ($cntr == 2) {{-- Winner--}}
+                @if ($item['highest'] == true) {{-- Winner--}}
                     <div class="card-container items-center">
                         <div class="winner_card">
                             <div class="card-inner" onclick="toggleFlip(this)" id="winner">
@@ -219,8 +219,13 @@
                             </div>
                         </div>
                         <div class="circle-info">
-                            <div class="circle">{{$item['count']}}</div>
-                            <div class="name">{{$item['option']}}</div>
+                            <div class="circle">{!! $item['cntr'] !!}</div>
+                            <div class="name">
+                                {{$item['option']}} <br> 
+                                <span class="text-sm font-normal text-yellow-500 flex items-center justify-center gap-2">
+                                    Votes: <span class="font-bold text-base">{{$item['count']}}</span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 @else
@@ -232,8 +237,15 @@
                             </div>
                         </div>
                         <div class="circle-info">
-                            <div class="circle">{{$item['count']}}</div>
-                            <div class="name">{{$item['option']}}</div>
+                            <div class="circle">
+                                {!! $item['cntr'] !!}
+                            </div>
+                            <div class="name">
+                                {{$item['option']}} <br> 
+                                <span class="text-sm font-normal text-yellow-500 flex items-center justify-center gap-2">
+                                    Votes: <span class="font-bold text-base">{{$item['count']}}</span>
+                                </span>
+                            </div>
                         </div>
                     </div>
 

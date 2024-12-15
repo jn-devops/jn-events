@@ -51,10 +51,24 @@ class LivePopCultureIcon extends Component
             return $b['count'] - $a['count'];
         });
 
-        // Swap the first and second elements
-        $temp = $array[0];
-        $array[0] = $array[1];
-        $array[1] = $temp;
-        return array_slice($array, 0, 3);
+        $array[3]['highest'] = false; 
+        $array[3]['cntr'] = '4<sup class="pt-4">th</sup>'; 
+        $array[1]['highest'] = false; 
+        $array[1]['cntr'] = '2<sup class="pt-4">nd</sup>'; 
+        $array[0]['highest'] = true;
+        $array[0]['cntr'] = '1<sup class="pt-4">st</sup>';
+        $array[2]['highest'] = false;
+        $array[2]['cntr'] = '3<sup class="pt-4">rd</sup>';
+        $array[4]['highest'] = false;
+        $array[4]['cntr'] = '5<sup class="pt-4">th</sup>';
+
+        $rearranged = [
+            $array[3],
+            $array[1],
+            $array[0],
+            $array[2],
+            $array[4],
+        ];
+        return $rearranged;
     }
 }
