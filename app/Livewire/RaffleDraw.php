@@ -52,7 +52,7 @@ class RaffleDraw extends Component
                 ->get();
             $this->employee_names = $checkins->pluck('name');
             // dd($checkins);
-            $this->dispatch('start-draw', $this->employee_names);
+//            $this->dispatch('start-draw', $this->employee_names);
             dd($this->employee_names,$checkins,$prize->companies,$prize->units);
 //            $this->employee_names = ['George', 'Samuel', 'Rey', 'Justin'];
 //            $this->dispatch('start-draw', $this->employee_names);
