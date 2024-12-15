@@ -91,46 +91,62 @@ class RaffleResource extends Resource
 //                                            });
 //                                    })
                                     ->columnSpan(3),
-                                Forms\Components\Placeholder::make('winners')
-                                    ->label('')
-                                ->content(function( Forms\Components\Placeholder $component){
-                                    $model = $component->getContainer()->model;
-                                    $winnersTable = '';
-
-                                    if ($model) {
-                                        // Fetch raffle winners
-                                        $raffleWinners = RaffleWinner::where('raffle_id', $model->raffle_id)
-                                            ->where('raffle_prize_id', $model->id)
-                                            ->pluck('employee_id');
-
-                                        // Begin table HTML
-                                        $winnersTable .= '<table style="width:100%; border-collapse: collapse;">';
-                                        $winnersTable .= '<thead>';
-                                        $winnersTable .= '<tr style="border-bottom: 1px solid #ddd; text-align: left;">';
-                                        $winnersTable .= '<th style="padding: 8px;">Raffle Winners</th>';
-                                        $winnersTable .= '</tr>';
-                                        $winnersTable .= '</thead>';
-                                        $winnersTable .= '<tbody>';
-
-                                        // Add rows for each winner
-                                        foreach ($raffleWinners as $raffleWinner) {
-                                            $employee = Employees::find($raffleWinner);
-                                            if ($employee) {
-                                                $winnersTable .= '<tr style="border-bottom: 1px solid #ddd;">';
-                                                $winnersTable .= '<td style="padding: 8px;">Employee ID: ' . $employee->employee_id . '<br>';
-                                                $winnersTable .= 'Name: ' . $employee->first_name . ' ' . $employee->last_name . '</td>';
-                                                $winnersTable .= '</tr>';
-                                            }
-                                        }
-
-                                        $winnersTable .= '</tbody>';
-                                        $winnersTable .= '</table>';
-                                    } else {
-                                        $winnersTable = '<p>No raffle winners found.</p>';
-                                    }
-
-                                    return new HtmlString($winnersTable);
-                                })->columnSpan(3),
+                                Forms\Components\Repeater::make('winners')
+                                ->relationship()
+                                ->schema([
+                                    Placeholder::make('id')
+                                        ->label('Name')
+                                        ->content(function(Model $record){
+                                            $name = $record->employee->first_name.' '.$record->employee->last_name;
+                                            $company= $record->employee->company;
+                                            $unit= $record->employee->unit;
+                                            return new HtmlString($name.'<br>'.$company.'<br>'.$unit);
+                                        })
+                                        ->columnSpanFull(),
+                                ])
+                                    ->addable(false)
+                                    ->live()
+                                ->columnSpanFull(),
+//                                Forms\Components\Placeholder::make('winners')
+//                                    ->label('')
+//                                ->content(function( Forms\Components\Placeholder $component){
+//                                    $model = $component->getContainer()->model;
+//                                    $winnersTable = '';
+//
+//                                    if ($model) {
+//                                        // Fetch raffle winners
+//                                        $raffleWinners = RaffleWinner::where('raffle_id', $model->raffle_id)
+//                                            ->where('raffle_prize_id', $model->id)
+//                                            ->pluck('employee_id');
+//
+//                                        // Begin table HTML
+//                                        $winnersTable .= '<table style="width:100%; border-collapse: collapse;">';
+//                                        $winnersTable .= '<thead>';
+//                                        $winnersTable .= '<tr style="border-bottom: 1px solid #ddd; text-align: left;">';
+//                                        $winnersTable .= '<th style="padding: 8px;">Raffle Winners</th>';
+//                                        $winnersTable .= '</tr>';
+//                                        $winnersTable .= '</thead>';
+//                                        $winnersTable .= '<tbody>';
+//
+//                                        // Add rows for each winner
+//                                        foreach ($raffleWinners as $raffleWinner) {
+//                                            $employee = Employees::find($raffleWinner);
+//                                            if ($employee) {
+//                                                $winnersTable .= '<tr style="border-bottom: 1px solid #ddd;">';
+//                                                $winnersTable .= '<td style="padding: 8px;">Employee ID: ' . $employee->employee_id . '<br>';
+//                                                $winnersTable .= 'Name: ' . $employee->first_name . ' ' . $employee->last_name . '</td>';
+//                                                $winnersTable .= '</tr>';
+//                                            }
+//                                        }
+//
+//                                        $winnersTable .= '</tbody>';
+//                                        $winnersTable .= '</table>';
+//                                    } else {
+//                                        $winnersTable = '<p>No raffle winners found.</p>';
+//                                    }
+//
+//                                    return new HtmlString($winnersTable);
+//                                })->columnSpan(3),
                             ])
                             ->itemLabel(function (array $state): ?string {
                                 $number_of_winners = 0;

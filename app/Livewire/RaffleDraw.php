@@ -63,7 +63,7 @@ class RaffleDraw extends Component
             $has_win_before = RaffleWinner::where('employee_id',Checkin::where('name', $this->winner)->first()->employee_id)
                                 ->where('raffle_id',$this->chosen_prize_model->raffle_id)
                                 ->where('raffle_prize_id',$this->chosen_prize_model->id)
-            ->first();
+                            ->first();
             if(!$has_win_before){
                 RaffleWinner::create([
                     'employee_id' => Checkin::where('name', $this->winner)->first()->employee_id,
