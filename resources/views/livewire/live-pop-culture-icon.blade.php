@@ -202,7 +202,7 @@
         <img class="" src="{{asset('img/popcultureicon.png')}}" alt="">
     </div>
     <div class="flex justify-center text-white text-3xl font-bold mt-3">
-        SCOREBOARD
+        LEADERBOARD
     </div>
     <div class="flex justify-center">
         <div class="slider">
