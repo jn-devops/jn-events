@@ -60,13 +60,13 @@
             <div class="modal-content container mx-auto h-auto text-left p-4">
                 <div class="flex items-center justify-center">
                   <div class="logo_container mt-7 mb-7 w-48">
-                      <img class="w-full" src="{{asset('img/popcultureicon.png')}}" alt="">
+                      <img class="w-full" src="{{asset('img/christmas_party_logo.png')}}" alt="">
                   </div>
                 </div>
                 <div class="text-3xl text-white font-bold text-center">
                   Successfully Registered
                   @if ($employee)
-                  <div class="w-full px-12 mt-10">
+                  <div class="w-full px-10 mt-10">
                       <table class="text-base w-full">
                         <tr>
                             <td class="text-left">Table</td>
