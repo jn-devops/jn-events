@@ -1,104 +1,115 @@
-<div class="flex justify-center items-center min-h-screen" x-data="{ showSplash: true }" x-init="setTimeout(() => showSplash = false, 2500)">
-    <!-- Splash Screen -->
-    <div x-show="showSplash" class="fixed inset-0 flex justify-center items-center bg-white z-50">
-{{--        <img class="h-full w-full object-cover" src="{{ $this->campaign->splash_image_url }}" alt="Splash Image">--}}
+<div>
+    <style>
+        .modal {
+            transition: opacity 0.25s ease;
+        }
+        .rgb-button {
+            background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff);
+            background-size: 600% 600%;
+        }
+        .rgb-button.zoom {
+            transform: scale(1.5);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+    <x-background />
+    <div class="flex justify-center mt-20">
+        <div class="logo_container">
+            <img src="{{asset('img/joynostalglogo.png')}}" alt="JN Logo" class="mt-5 w-24">
+            <h1 class="main_text1-v2" style="font-size: 5em;">
+                <span>CHRISTMAS</span>
+                <span>CHRISTMAS</span>
+            </h1>
+            <h2 class="sub_text1">Party 2024</h2>
+        </div>
+    </div>
+    <div class="flex justify-center text-white font-bold text-2xl mt-20 mb-9">
+        REGISTRATION FORM
+    </div>
+    <div class="form_container gap-4">
+        <div class="max-w-sm min-w-[200px] text-white ps-5">
+            <input  wire:model.live="first_name" class="w-full bg-transparent placeholder:text-slate-400 text-white text-sm border border-b-slate-100 border-t-0 border-x-0 border-1 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="First Name" />
+        </div>
+        <div class="max-w-sm min-w-[200px] text-white pe-5">
+            <input  wire:model.live="last_name" class="w-full bg-transparent placeholder:text-slate-400 text-white text-sm border border-b-slate-100 border-t-0 border-x-0 border-1 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="Last Name" />
+        </div>
+    </div>
+    <div class="flex justify-center italic text-red-500" wire:ignore.self>
+        {{$error}}
+    </div>
+    <div class="flex justify-center mt-6">
+        <button id="choose-winner" wire:click="create" class="rgb-button mb-5 text-white w-44 cursor-pointer font-bold py-4 px-8 rounded-full shadow-lg transform duration-1000 hover:scale-105 transition-all ease-in-out">
+            <div id="grand_winner"> Register </div>
+        </button>
     </div>
 
-    <div  x-show="!showSplash" x-transition class="w-full max-w-lg bg-white p-4 rounded-lg">
-        <div class=" flex justify-center ">
-            <img class="h-auto w-full lg:w-full" src="/CompanyLogo.png" alt="CompanyLogo.png">
+    <!--Success Modal-->
+    <div wire:ignore.self class="success-modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+        <div class="modal-overlay absolute w-full h-full bg-gradient-to-b from-[#0d1d31] via-[#0d1d31] to-transparent"></div>
+
+        <div class="modal-container fixed w-full h-full z-50 overflow-y-auto ">
+            
+            <div id="success_modal" class="success-modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+                <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                    <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                </svg>
+            </div>
+
+            <!-- Add margin if you want to see grey behind the modal-->
+            <div class="modal-content container mx-auto h-auto text-left p-4">
+                <div class="flex items-center justify-center">
+                  <div class="logo_container mt-7 mb-7 w-48">
+                      <img class="w-full" src="{{asset('img/popcultureicon.png')}}" alt="">
+                  </div>
+                </div>
+                <div class="text-3xl text-white font-bold text-center">
+                  Successfully Registered
+                  @if ($employee)
+                  <div class="w-full px-12 mt-10">
+                      <table class="text-base w-full">
+                        <tr>
+                            <td class="text-left">Employee ID</td>
+                            <td class="text-left">{{$employee->employee_id}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Employee Name</td>
+                            <td class="text-left">{{$employee->first_name}} {{$employee->last_name}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Company</td>
+                            <td class="text-left">{{$employee->company}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Unit Group</td>
+                            <td class="text-left">{{$employee->unit}}</td>
+                        </tr>
+                      </table>
+                  </div>
+                  @endif
+                </div>
+
+            </div>
         </div>
-        <form wire:submit="create" class="w-full">
-            <div  class="flex justify-center ">
-                <h2 class="text-xl font-bold leading-tight text-gray-800  text-center">
-                    Check-in
-                </h2>
-
-            </div>
-            <div  class="flex justify-center ">
-                <p class="text-m  leading-tight text-gray-800 mb-4 text-center">
-{{--                    {{$this->organization->name??''}}--}}
-                </p>
-            </div>
-
-            {{ $this->form }}
-
-            <div class="flex justify-center ">
-                <x-filament::button type="submit" class="mt-4  text-white py-2 px-4 rounded mx-auto w-60">
-                    Submit
-                </x-filament::button>
-            </div>
-        </form>
-
-
-        <x-filament-actions::modals />
-
     </div>
-    <x-filament::modal
-        id="success-modal"
-        icon="heroicon-o-check-circle"
-        icon-color="success"
-        sticky-header
-        width="md"
-        class="rounded-md"
-        :autofocus="false"
-        x-on:close-modal.window="$wire.closeModal()">
-        <x-slot name="heading">
-            Check-in Complete
-        </x-slot>
-        <x-slot name="description">
-            Thank you for completing this form!
-        </x-slot>
-        <div class="px-4 py-2">
-            <table class="table-auto w-full">
-                <tbody>
-                <tr class="border-b">
-                    <td class="px-4 py-2">Employee ID</td>
-                    <td class="px-4 py-2">{{ $data['employee_id_number'] ?? '' }}</td>
-                </tr>
-                <tr class="border-b">
-                    <td class="px-4 py-2">Name</td>
-                    <td class="px-4 py-2">{{ $data['name'] ?? '' }}</td>
-                </tr>
-                <tr class="border-b">
-                    <td class="px-4 py-2">Company</td>
-                    <td class="px-4 py-2">{{ $data['company'] ?? '' }}</td>
-                </tr>
-{{--                <tr class="border-b">--}}
-{{--                    <td class="px-4 py-2">Department</td>--}}
-{{--                    <td class="px-4 py-2">{{ $data['department'] ?? '' }}</td>--}}
-{{--                </tr>--}}
-                <tr class="border-b">
-                    <td class="px-4 py-2">Unit Group</td>
-                    <td class="px-4 py-2">{{ $data['unit_group'] ?? '' }}</td>
-                </tr>
-{{--                <tr class="border-b">--}}
-{{--                    <td class="px-4 py-2">Unit</td>--}}
-{{--                    <td class="px-4 py-2">{{ $data['unit'] ?? '' }}</td>--}}
-{{--                </tr>--}}
-                </tbody>
-            </table>
 
-        </div>
-    </x-filament::modal>
 
-    <x-filament::modal
-        id="error-modal"
-        icon="heroicon-o-check-circle"
-        icon-color="danger"
-        sticky-header
-        width="md"
-        class="rounded-md"
-        :autofocus="false">
-        <x-slot name="heading">
-            Error
-        </x-slot>
-        <x-slot name="description">
-            Please check this error message!
-        </x-slot>
-        <div class="px-4 py-2 ">
-            {{$this->error}}
-        </div>
-    </x-filament::modal>
+    <script>
+        function toggleSuccess(){
+          const body = document.querySelector('body')
+          const modal = document.querySelector('.success-modal')
+          modal.classList.toggle('opacity-0')
+          modal.classList.toggle('pointer-events-none')
+          body.classList.toggle('modal-active')
+        }
 
+        window.addEventListener('success-modal', event => {
+          toggleSuccess();
+        });
+    </script>
 </div>

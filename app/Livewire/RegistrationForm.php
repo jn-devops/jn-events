@@ -7,49 +7,53 @@ use App\Models\Employees;
 use App\Models\Organization;
 use Exception;
 use Filament\Forms;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
+// use Filament\Forms\Concerns\InteractsWithForms;
+// use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 use Illuminate\Contracts\View\View;
 
-class RegistrationForm extends Component implements HasForms
+class RegistrationForm extends Component
 {
-    use InteractsWithForms;
+    // use InteractsWithForms;
 
     public ?array $data = [];
+    public String $first_name;
+    public String $last_name;
     public String $error = '';
+    public $employee;
     public function mount(): void
     {
-        $this->form->fill();
+        $this->employee = null;
     }
 
-    public function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('last_name')
-                    ->label('Last Name')
-                    ->required(),
-                Forms\Components\TextInput::make('first_name')
-                    ->label('First Name')
-                    ->required(),
-            ])
-            ->statePath('data')
-            ->model(Checkin::class);
-    }
+    // public function form(Form $form): Form
+    // {
+    //     return $form
+    //         ->schema([
+    //             Forms\Components\TextInput::make('last_name')
+    //                 ->label('Last Name')
+    //                 ->required(),
+    //             Forms\Components\TextInput::make('first_name')
+    //                 ->label('First Name')
+    //                 ->required(),
+    //         ])
+    //         ->statePath('data')
+    //         ->model(Checkin::class);
+    // }
 
     public function create()
     {
+        $this->error = '';
         try {
-            $data = $this->form->getState();
+            // $data = $this->form->getState();
 
-            $employee = Employees::whereRaw('UPPER(last_name) = ?', [strtoupper($data['last_name'])])
-                ->whereRaw('UPPER(first_name) = ?', [strtoupper($data['first_name'])])
+            $employee = Employees::whereRaw('UPPER(last_name) = ?', [strtoupper($this->last_name)])
+                ->whereRaw('UPPER(first_name) = ?', [strtoupper($this->first_name)])
                 ->first();
 
-            $checkin = Checkin::whereRaw('UPPER(name) = ?', [strtoupper($data['first_name'].' '.$data['last_name'])])
+            $checkin = Checkin::whereRaw('UPPER(name) = ?', [strtoupper($this->first_name.' '.$this->last_name)])
                 ->whereDate('created_at', now()->toDateString()) // Ensure the check-in is for today
                 ->first();
 
@@ -77,9 +81,10 @@ class RegistrationForm extends Component implements HasForms
                 'employee_id' => $employee->id??'',
                 'employee_id_number' => $employee->employee_id??'',
             ]);
+            $this->employee = $employee;
+            // $this->form->model($record)->saveRelationships();
+            $this->dispatch('success-modal', 'Successfully Vote');
 
-            $this->form->model($record)->saveRelationships();
-            $this->dispatch('open-modal', id: 'success-modal');
 
         }catch (Exception $e) {
             if($e->getMessage() == "The employee ID has already been taken."){
@@ -96,6 +101,7 @@ class RegistrationForm extends Component implements HasForms
     }
     public function render(): View
     {
-        return view('livewire.registration-form');
+        return view('livewire.registration-form')
+                ->layout('components.layouts.appV3');
     }
 }
