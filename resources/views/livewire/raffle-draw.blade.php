@@ -113,6 +113,7 @@
                                 name = names[rand(0, names.length - 1)];
                             }while(name == last_winner)
                             grand_winner.textContent = name;
+                            @this.set('winner', name)
                             $('#winner span').addClass("winner");
                             $('#choose-winner').show();
                             setTimeout(shoot, 0);
