@@ -10,6 +10,7 @@ use App\Filament\Resources\RaffleResource\Pages;
 use App\Filament\Resources\RaffleResource\RelationManagers;
 use App\Models\Employees;
 use App\Models\Raffle;
+use App\Models\RaffleWinner;
 use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Placeholder;
@@ -91,6 +92,13 @@ class RaffleResource extends Resource
 //                                    })
                                     ->columnSpan(3),
                             ])
+                            ->itemLabel(function (array $state): ?string {
+                                $number_of_winners = 0;
+                                $number_of_winners = RaffleWinner::where('raffle_id',$state['raffle_id'])
+                                    ->where('raffle_prize_id',$state['id'])
+                                    ->count();
+                                  return  'Available ('.$number_of_winners.'/'.$state['quantity'].')';
+                            })
                             ->extraItemActions([
                                 Action::make('setCurrentPrize')
                                     ->button()

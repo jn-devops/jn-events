@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('raffle_id');
             $table->uuid('raffle_prize_id');
-            $table->uuid('participant_id');
+//            $table->uuid('participant_id');
             $table->unsignedInteger('employee_id');
             $table->timestamps();
 

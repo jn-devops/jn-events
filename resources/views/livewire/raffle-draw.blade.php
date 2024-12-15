@@ -154,7 +154,7 @@
                     window.Echo.private('set-winner')
                         .listen('.set-winner', (event) => {
                             console.log('set-winner');
-                            console.log(event);
+                            console.log(event.prize);
                             @this.call('setWinner',event.prize);
                         });
                 });
