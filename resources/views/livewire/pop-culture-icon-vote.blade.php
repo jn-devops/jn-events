@@ -55,15 +55,16 @@
     {{-- <x-background /> --}}
     <div class="w-full flex flex-col justify-center">
         <div class=" w-full flex justify-center">
-            <div class="logo_container mt-7 mb-7">
+            <div class="logo_container mt-7">
                 <img src="{{asset('img/popcultureicon.png')}}" alt="">
             </div>
-        </div>
+        </div> 
+        <h3 class="text-center mt-2 mb-7 text-2xl text-white font-bold">Choose your Winner 😎</h3>
         <div class="grid grid-cols-2 gap-4 md:grid-cols-4 px-4 pb-5">
           @php
               $cntr = 0;
           @endphp
-            @foreach ($poll->options as $option)
+            @foreach ($poll->options->shuffle() as $option)
               @php
                   $cntr++;
               @endphp

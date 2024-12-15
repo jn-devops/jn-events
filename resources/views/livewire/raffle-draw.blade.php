@@ -16,7 +16,7 @@
         }
     </style>
     <x-background />
-    <div class="w-full flex flex-col justify-center z-10">
+    <div class="w-full flex flex-col justify-center z-10 pt-10">
         <div class=" w-full flex justify-center z-10">
             <div class="logo_container mb-10">
                 <img src="{{asset('img/joynostalglogo.png')}}" alt="JN Logo" class="my-5 w-44">
@@ -28,23 +28,13 @@
             </div>
         </div>
         <div class="z-10">
-            <div class="container">
+            <div class="">
                 <div class = "raffle-cont">
                     <div class="text-center">
                         <div class="flex flex-col justify-center items-center mb-10">
                             @if ($chosen_prize_model)
-                                <img src="{{Illuminate\Support\Facades\Storage::url($chosen_prize_model->image)}}" alt="" class="h-[300px]">
+                                <img src="{{Illuminate\Support\Facades\Storage::url($chosen_prize_model->image)}}" alt="" class="h-[300px] rounded-lg shadow-lg shadow-yellow-700">
                             @endif
-                            <div>
-                                <div class="mt-2 grid grid-cols-1">
-                                    <select wire:model.live="chosen_prize" class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-                                        <option>Choose Prize</option>
-                                        @foreach ($prizes as $prize)
-                                            <option value={{$prize->id}}>{{$prize->description}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                         <button id="choose-winner" wire:click="draw" class="rgb-button mb-5 text-white w-64 cursor-pointer font-bold py-4 px-8 rounded-full shadow-lg transform duration-1000 hover:scale-105 transition-all ease-in-out">
                             <div id="grand_winner" wire:ignore> Reveal the Winner </div>
