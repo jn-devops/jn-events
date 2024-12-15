@@ -55,6 +55,10 @@ class CompetitionResource extends Resource
                                 ->required()
                                 ->maxLength(255)
                                 ->columnSpan(1),
+                            Forms\Components\TextInput::make('song')
+                                ->required()
+                                ->maxLength(255)
+                                ->columnSpan(2),
                         ])
                         ->columns(4)
                         ->columnSpanFull()

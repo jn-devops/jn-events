@@ -11,6 +11,7 @@ class Participant extends Model
         'name',
         'category',
         'image',
+        'song'
     ];
 
     public function scores()
