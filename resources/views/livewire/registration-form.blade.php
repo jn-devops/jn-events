@@ -49,7 +49,7 @@
         <div class="modal-overlay absolute w-full h-full bg-gradient-to-b from-[#0d1d31] via-[#0d1d31] to-transparent"></div>
 
         <div class="modal-container fixed w-full h-full z-50 overflow-y-auto ">
-            
+
             <div id="success_modal" class="success-modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
                 <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
                     <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
@@ -69,8 +69,8 @@
                   <div class="w-full px-12 mt-10">
                       <table class="text-base w-full">
                         <tr>
-                            <td class="text-left">Employee ID</td>
-                            <td class="text-left">{{$employee->employee_id}}</td>
+                            <td class="text-left">Table</td>
+                            <td class="text-left">{{$employee->table_number}}</td>
                         </tr>
                         <tr>
                             <td class="text-left">Employee Name</td>
