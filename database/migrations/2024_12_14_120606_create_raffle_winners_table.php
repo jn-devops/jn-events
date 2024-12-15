@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('raffle_winners');
         Schema::create('raffle_winners', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('raffle_id');
