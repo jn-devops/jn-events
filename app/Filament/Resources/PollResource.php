@@ -71,7 +71,7 @@ class PollResource extends Resource
                             ->content(function (Get $get, Model $record) {
                                 return \LaraZeus\Qr\Facades\Qr::render(
                                     data:  sprintf(
-                                        '%s/polls/%s/votes',
+                                        '%s/live-pop-culture-icon/%s',
                                         config('app.url'),
                                         $record->id,
                                     ),
@@ -81,7 +81,7 @@ class PollResource extends Resource
                             ->label('Live Poll Link')
                             ->content(function (Get $get, Model $record) {
                                 $url = sprintf(
-                                    '%s/polls/%s/votes',
+                                    '%s/live-pop-culture-icon/%s',
                                     config('app.url'),
                                     $record->id,
                                 );
@@ -92,7 +92,7 @@ class PollResource extends Resource
                             ->content(function (Get $get, Model $record) {
                                 return \LaraZeus\Qr\Facades\Qr::render(
                                     data:  sprintf(
-                                        '%s/vote/%s',
+                                        '%s/pop-culture-icon/%s',
                                         config('app.url'),
                                         $record->id,
                                     ),
@@ -102,7 +102,7 @@ class PollResource extends Resource
                             ->label('Vote Link')
                             ->content(function (Get $get, Model $record) {
                                 $url = sprintf(
-                                    '%s/vote/%s',
+                                    '%s/pop-culture-icon/%s',
                                     config('app.url'),
                                     $record->id,
                                 );
