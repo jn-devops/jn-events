@@ -65,7 +65,7 @@
           @php
               $cntr = 0;
           @endphp
-            @foreach ($poll->options->shuffle() as $option)
+            @foreach ($poll_options as $option)
               @php
                   $cntr++;
               @endphp
@@ -118,7 +118,7 @@
             <!-- Add margin if you want to see grey behind the modal-->
             <div class="modal-content container mx-auto h-auto text-left p-4">
 
-                <div class="logo_container mt-7 mb-7">
+                <div class=" mt-7 mb-7 w-16 mx-auto">
                     <img src="{{asset('img/popcultureicon.png')}}" alt="">
                 </div>
                 <div class="text-white text-center my-5">Tap photo to reveal Inspiration</div>
@@ -139,6 +139,9 @@
                         />
                         </div>
                     </button>
+                </div>
+                <div class="flex justify-center text-white font-semibold">
+                  {{$option_name}}
                 </div>
                 @if ($error)
                   <div class="w-full text-center text-red-500 italic mt-5">

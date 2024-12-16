@@ -20,10 +20,12 @@ class PopCultureIconVote extends Component
     public string $first_name;
     public string $last_name;
     public $poll;
+    public $poll_options;
     public $poll_option_id;
     public string $error;
     public string $image;
     public string $icon;
+    public string $option_name;
     public string $suucess_message;
 
 
@@ -36,8 +38,10 @@ class PopCultureIconVote extends Component
     public function mount(Poll $poll): void
     {
         $this->poll = $poll;
+        $this->poll_options = $poll->options->shuffle();
         $this->first_name = '';
         $this->last_name = '';
+        $this->option_name = '';
         $this->poll_option_id = '361b9691-fe35-4a61-a82f-c8b3fbfc48f5'; // TODO: change this
         $this->image = 'https://images.unsplash.com/photo-1552960562-daf630e9278b?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=687&amp;q=80';
         $this->icon = 'https://images.unsplash.com/photo-1552960562-daf630e9278b?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=687&amp;q=80';
@@ -112,6 +116,7 @@ class PopCultureIconVote extends Component
 
     public function open_card($option){
         $this->poll_option_id = $option['id'];
+        $this->option_name = $option['option'];
         $this->image = Storage::url($option['image']);
         $this->icon = Storage::url($option['icon_image']);
 
