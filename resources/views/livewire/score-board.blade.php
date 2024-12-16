@@ -51,7 +51,7 @@
             </div>
         </div>
    </div>
-   <div class="flex flex-row justify-center mt-8">
+   <div class="flex flex-row justify-center mt-8 " style="perspective:700px;">
         <div class="slider">
             <div class="card-container items-center cursor-pointer" >
                 <div class="bg-[#4C43CD] rounded-full px-3 py-2 flex flex-row gap-3 text-left items-center text-white pe-3 w-52 shadow-md shadow-[#4c43cd]">
