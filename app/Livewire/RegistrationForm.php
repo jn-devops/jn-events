@@ -25,6 +25,8 @@ class RegistrationForm extends Component
     public $employee;
     public function mount(): void
     {
+        $this->first_name = '';
+        $this->last_name = '';
         $this->employee = null;
     }
 
