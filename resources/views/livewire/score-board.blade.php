@@ -60,13 +60,13 @@
             @foreach ($categories as $category)
                 @if ($category == $current_category)
                     <div class="card-container items-center cursor-pointer" >
-                        <div wire:click='change_category("{{$category}}")' class="bg-[#4C43CD] rounded-full flex flex-row gap-3 justify-center text-center items-center text-white px-5 py-2 w-28  shadow-md shadow-[#4c43cd]">
+                        <div wire:click='change_category("{{$category}}")' class="bg-[#4C43CD] rounded-full flex flex-row gap-3 justify-center text-center items-center text-white px-5 py-2 shadow-md shadow-[#4c43cd]">
                             <span class="text-sm font-semibold">{{$category}}</span>
                         </div>
                     </div>
                 @else
                     <div class="card-container items-center cursor-pointer" >
-                        <div wire:click='change_category("{{$category}}")' class="bg-neutral-500 rounded-full flex flex-row gap-3 justify-center text-center items-center text-white px-5 py-2 w-28  shadow-md shadow-neutral-500">
+                        <div wire:click='change_category("{{$category}}")' class="bg-neutral-500 rounded-full flex flex-row gap-3 justify-center text-center items-center text-white px-5 py-2 shadow-md shadow-neutral-500">
                             <span class="text-sm font-semibold">{{$category}}</span>
                         </div>
                     </div>
