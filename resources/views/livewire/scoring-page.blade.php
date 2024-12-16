@@ -28,14 +28,18 @@
         </div>
         <div class="basis-2/4 ps-5">
             <div class="flex flex-row gap-4 font-semibold">
-                <h2 wire:click="category_filter('all')" class="cursor-pointer @if($currrentCategory == 'all') text-neutral-100 @else text-neutral-500  @endif">All</h2>
+                <div wire:click="category_filter('all')" class="cursor-pointer px-3 py-2 border border-[#EC0E52] hover:bg-[#EC0E52] text-white rounded-2xl font-semibold text-xs w-10  @if($currrentCategory == 'all') bg-[#EC0E52] @else bg-transparent @endif">
+                    <h2 class="cursor-pointer ">All</h2>
+                </div>
                 @foreach ($category as $cat)
-                    <h2 wire:click="category_filter('{{$cat}}')" class="cursor-pointer @if($currrentCategory == $cat) text-neutral-100 @else text-neutral-500  @endif">{{$cat}}</h2>
+                    <div wire:click="category_filter('{{$cat}}')" class="cursor-pointer px-3 py-2 border border-[#EC0E52] text-white rounded-2xl font-semibold text-xs w-16 text-center @if($currrentCategory == $cat) bg-[#EC0E52] @else bg-transparent @endif">
+                        <h2 class="cursor-pointer">{{$cat}}</h2>
+                    </div>
                 @endforeach
             </div>
         </div>
         <div class="basis-1/4 text-right">
-            <button class="bg-[#EC0E52] text-white px-7 py-3 rounded-2xl font-semibold text-sm">Submit</button>
+            {{-- <button class="bg-[#EC0E52] text-white px-7 py-3 rounded-2xl font-semibold text-sm">Submit</button> --}}
             <div class=" text-yellow-400 text-xl mt-2 font-semibold">
                 Total: {{$totalScore}}%
             </div>
