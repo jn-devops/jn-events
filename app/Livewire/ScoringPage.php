@@ -114,7 +114,7 @@ class ScoringPage extends Component
         $this->participants = $competition->participants;
         $this->currentParticipant=$this->participants->first();
         $this->currrentCategory = 'all';
-        $current_score=$this->currentParticipant->scores;
+        $current_score=$this->currentParticipant->scores->where('judge_id',$this->judge->id);
         if($current_score->count()==0){
             $this->score = [
                 'voice_quality' => 0,
@@ -136,7 +136,7 @@ class ScoringPage extends Component
     public function changeParticipant($participantId)
     {
         $this->currentParticipant = $this->participants->firstWhere('id', $participantId);
-        $current_score=$this->currentParticipant->scores;
+        $current_score=$this->currentParticipant->scores->where('judge_id',$this->judge->id);
         if($current_score->count()==0){
             $this->score = [
                 'voice_quality' => 0,

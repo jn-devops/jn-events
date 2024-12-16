@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CompetitionResource\Pages;
 use App\Filament\Resources\CompetitionResource\RelationManagers;
 use App\Models\Competition;
+use App\Models\CompetitionJudge;
+use App\Models\Score;
 use Filament\Forms;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Form;
@@ -59,10 +61,82 @@ class CompetitionResource extends Resource
                                 ->required()
                                 ->maxLength(255)
                                 ->columnSpan(2),
+                            Forms\Components\Placeholder::make('scores')
+                                ->content(function (Forms\Components\Placeholder $component) {
+                                    $model = $component->getContainer()->model;
+
+                                    $judgesScores = $model->scores->groupBy('judge_id')->map(function ($scores, $judgeId) {
+                                        $judgeName = CompetitionJudge::find($judgeId)->name;
+                                        $criteriaScores = $scores->mapWithKeys(function ($score) {
+                                            return [$score->criteria => $score->score];
+                                        });
+
+                                        $totalScore = $criteriaScores->sum();
+
+                                        return [
+                                            'judge' => $judgeName,
+                                            'criteriaScores' => $criteriaScores,
+                                            'total' => $totalScore,
+                                        ];
+                                    });
+
+                                    $criteriaHeaders = $model->scores->pluck('criteria')->unique();
+
+                                    // Calculate totals per criterion
+                                    $totalsPerCriteria = $criteriaHeaders->mapWithKeys(function ($criteria) use ($model) {
+                                        return [$criteria => $model->scores->where('criteria', $criteria)->sum('score')];
+                                    });
+
+                                    $totalOverall = $totalsPerCriteria->sum();
+
+                                    // Build the table
+                                    $tableHtml = '<table style="border-collapse: collapse; width: 100%; font-size: 14px;">';
+                                    $tableHtml .= '<thead>';
+                                    $tableHtml .= '<tr style="border-bottom: 1px solid black;">';
+                                    $tableHtml .= '<th style="text-align: left; padding: 4px;">Judge</th>';
+
+                                    // Generate the header for criteria
+                                    foreach ($criteriaHeaders as $criteria) {
+                                        $tableHtml .= "<th style=\"text-align: center; padding: 4px;\">{$criteria}</th>";
+                                    }
+                                    $tableHtml .= '<th style="text-align: center; padding: 4px;">Total</th>';
+                                    $tableHtml .= '</tr>';
+                                    $tableHtml .= '</thead>';
+                                    $tableHtml .= '<tbody>';
+
+                                    // Generate rows for each judge
+                                    foreach ($judgesScores as $judgeScores) {
+                                        $tableHtml .= '<tr style="border-bottom: 1px solid #ddd;">';
+                                        $tableHtml .= "<td style=\"text-align: left; padding: 4px;\">{$judgeScores['judge']}</td>";
+
+                                        foreach ($criteriaHeaders as $criteria) {
+                                            $score = $judgeScores['criteriaScores']->get($criteria, '-');
+                                            $tableHtml .= "<td style=\"text-align: center; padding: 4px;\">{$score}</td>";
+                                        }
+
+                                        $tableHtml .= "<td style=\"text-align: center; padding: 4px;\">{$judgeScores['total']}</td>";
+                                        $tableHtml .= '</tr>';
+                                    }
+
+                                    // Add the totals row with a bottom border
+                                    $tableHtml .= '<tr style="border-bottom: 2px solid black; font-weight: bold;">';
+                                    $tableHtml .= '<td style="text-align: left; padding: 4px;">Total</td>';
+                                    foreach ($criteriaHeaders as $criteria) {
+                                        $tableHtml .= '<td style="text-align: center; padding: 4px;">' . $totalsPerCriteria[$criteria] . '</td>';
+                                    }
+                                    $tableHtml .= "<td style=\"text-align: center; padding: 4px;\">{$totalOverall}</td>";
+                                    $tableHtml .= '</tr>';
+
+                                    $tableHtml .= '</tbody></table>';
+
+                                    return new HtmlString($tableHtml);
+                                })
+                                ->columnSpanFull(),
+
                         ])
                         ->columns(4)
                         ->columnSpanFull()
-                ])->columnSpan(2),
+                ])->columnSpan(3),
                 Forms\Components\Section::make()->schema([
                     Placeholder::make('live_poll_qr_code')
                         ->label('Winners QR Code')
@@ -123,7 +197,7 @@ class CompetitionResource extends Resource
                     Placeholder::make('updated_at')
                         ->content(fn ($record) => $record?->created_at?->diffForHumans() ?? new HtmlString('&mdash;'))
                 ])->columnSpan(1),
-            ])->columns(3);
+            ])->columns(4);
     }
 
     public static function table(Table $table): Table

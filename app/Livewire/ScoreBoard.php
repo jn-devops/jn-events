@@ -15,6 +15,7 @@ class ScoreBoard extends Component
     public $totalScore;
     public $category_winners;
     public $categories;
+    
     public function mount(Competition $competition)
     {
         $this->$competition = $competition;
