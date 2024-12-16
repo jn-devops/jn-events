@@ -2,12 +2,15 @@
 
 namespace App\Filament\Resources;
 
+use App\Events\SetRafflePrize;
 use App\Filament\Resources\CompetitionResource\Pages;
 use App\Filament\Resources\CompetitionResource\RelationManagers;
 use App\Models\Competition;
 use App\Models\CompetitionJudge;
+use App\Models\Participant;
 use App\Models\Score;
 use Filament\Forms;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -118,6 +121,15 @@ class CompetitionResource extends Resource
                                 ->columnSpanFull(),
 
 
+                        ])
+                        ->extraItemActions([
+                                Action::make('resetScores')
+                                    ->button()
+                                    ->label('Reset Scores')
+                                    ->action(function (array $arguments,$component): void {
+                                        $participant_id = $component->getLivewire()->data['participants'][$arguments['item']]['id'];
+                                        Participant::find($participant_id)->scores()->delete();
+                                    }),
                         ])
                         ->columns(4)
                         ->columnSpanFull()
