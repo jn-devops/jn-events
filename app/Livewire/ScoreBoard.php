@@ -15,7 +15,9 @@ class ScoreBoard extends Component
     public $totalScore;
     public $category_winners;
     public $categories;
-    
+    public $current_participant;
+    public $current_category;
+
     public function mount(Competition $competition)
     {
         $this->$competition = $competition;
@@ -41,12 +43,36 @@ class ScoreBoard extends Component
         $this->categories = $competition->participants()
             ->select('category')
             ->distinct()
-            ->pluck('category');
+            ->pluck('category');;
+
+        $this->current_category = $this->categories[0];
+        foreach ($this->category_winners as $winner){
+            if($winner['category'] == $this->current_category){
+                $this->setCurrentParticipant($winner['participant_id']);
+            }
+        }
+        
+        // dd($this->current_participant);
+
+            // dd($this->category_winners);
     }
 
     public function render()
     {
         return view('livewire.score-board')
             ->layout('components.layouts.appV3');
+    }
+
+    public function change_category($cat){
+        $this->current_category = $cat;
+        foreach ($this->category_winners as $winner){
+            if($winner['category'] == $this->current_category){
+                $this->setCurrentParticipant($winner['participant_id']);
+            }
+        }
+    }
+
+    public function setCurrentParticipant($id){
+        $this->current_participant =  Participant::find($id);
     }
 }
