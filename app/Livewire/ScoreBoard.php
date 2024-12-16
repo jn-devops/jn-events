@@ -17,9 +17,11 @@ class ScoreBoard extends Component
     public $categories;
     public $current_participant;
     public $current_category;
+    public $reveal;
 
     public function mount(Competition $competition)
     {
+        $this->reveal = false;
         $this->$competition = $competition;
         // Get total scores per participant for a specific competition using pluck
         $this->totalScore = Score::where('competition_id', $this->competition->id)
@@ -70,9 +72,14 @@ class ScoreBoard extends Component
                 $this->setCurrentParticipant($winner['participant_id']);
             }
         }
+        $this->reveal = false;
     }
 
     public function setCurrentParticipant($id){
         $this->current_participant =  Participant::find($id);
+    }
+
+    public function toggleReveal(){
+        $this->reveal = !$this->reveal;
     }
 }

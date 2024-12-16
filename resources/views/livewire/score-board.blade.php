@@ -32,26 +32,46 @@
    <div class="flex justify-center mt-5 text-white text-xl font-bold mb-5">
         {{$competition->name}}
    </div>
-   <div class="flex justify-center">
+   <div class="flex justify-center" wire:click='toggleReveal'>
     @foreach ($category_winners as $winner)
         @if ($winner['category'] == $current_category)
-            <div class="relative rounded-xl shadow-lg shadow-yellow-600 w-[250px] h-[350px]" style="background-image: url('{{ Storage::url($current_participant->image) }}'); background-size: cover; background-position: center; ">
-                <div class="absolute bottom-0 w-full bg-black bg-opacity-50 rounded-xl py-2 px-3">
-                    <div class="flex flex-row">
-                        <div class="basis-9/12 ps-2">
-                            <p class=" text-white text-sm w-full font-bold">
-                                {{ $current_participant->name ?? '' }}
-                            </p>
-                            <p class="text-[9px] text-neutral-300 italic">🎶 {{ $current_participant->song ?? '' }}</p>
-                        </div>
-                        <div class="basis-3/12">
-                            <div class="rounded-full w-10 h-10 bg-black ml-auto text-white text-xs flex justify-center items-center">
-                                {{$winner['total_score']}}
+            @if ($reveal)
+                <div class="relative rounded-xl shadow-lg shadow-yellow-600 w-[250px] h-[350px]" style="background-image: url('{{ Storage::url($current_participant->image) }}'); background-size: cover; background-position: center; ">
+                    <div class="absolute bottom-0 w-full bg-black bg-opacity-50 rounded-xl py-2 px-3">
+                        <div class="flex flex-row">
+                            <div class="basis-9/12 ps-2">
+                                <p class=" text-white text-sm w-full font-bold">
+                                    {{ $current_participant->name ?? '' }}
+                                </p>
+                                <p class="text-[9px] text-neutral-300 italic">🎶 {{ $current_participant->song ?? '' }}</p>
+                            </div>
+                            <div class="basis-3/12">
+                                <div class="rounded-full w-10 h-10 bg-black ml-auto text-white text-xs flex justify-center items-center">
+                                    {{$winner['total_score']}}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @else
+                <div class="relative rounded-xl shadow-lg shadow-yellow-600 w-[250px] h-[350px]" style="background-image: url('{{ asset("img/reveal.png")}}'); background-size: cover; background-position: center; ">
+                    <div class="absolute bottom-0 w-full bg-black bg-opacity-50 rounded-xl py-2 px-3">
+                        <div class="flex flex-row">
+                            <div class="basis-9/12 ps-2">
+                                <p class=" text-white text-sm w-full font-bold">
+                                    ??
+                                </p>
+                                <p class="text-[9px] text-neutral-300 italic">🎶 ??</p>
+                            </div>
+                            <div class="basis-3/12">
+                                <div class="rounded-full w-10 h-10 bg-black ml-auto text-white text-xs flex justify-center items-center">
+                                    ??
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         @endif
     @endforeach
    </div>
