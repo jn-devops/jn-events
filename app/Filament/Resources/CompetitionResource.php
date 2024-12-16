@@ -82,13 +82,6 @@ class CompetitionResource extends Resource
 
                                     $criteriaHeaders = $model->scores->pluck('criteria')->unique();
 
-                                    // Calculate totals per criterion
-                                    $totalsPerCriteria = $criteriaHeaders->mapWithKeys(function ($criteria) use ($model) {
-                                        return [$criteria => $model->scores->where('criteria', $criteria)->sum('score')];
-                                    });
-
-                                    $totalOverall = $totalsPerCriteria->sum();
-
                                     // Build the table
                                     $tableHtml = '<table style="border-collapse: collapse; width: 100%; font-size: 14px;">';
                                     $tableHtml .= '<thead>';
@@ -118,20 +111,12 @@ class CompetitionResource extends Resource
                                         $tableHtml .= '</tr>';
                                     }
 
-                                    // Add the totals row with a bottom border
-                                    $tableHtml .= '<tr style="border-bottom: 2px solid black; font-weight: bold;">';
-                                    $tableHtml .= '<td style="text-align: left; padding: 4px;">Total</td>';
-                                    foreach ($criteriaHeaders as $criteria) {
-                                        $tableHtml .= '<td style="text-align: center; padding: 4px;">' . $totalsPerCriteria[$criteria] . '</td>';
-                                    }
-                                    $tableHtml .= "<td style=\"text-align: center; padding: 4px;\">{$totalOverall}</td>";
-                                    $tableHtml .= '</tr>';
-
                                     $tableHtml .= '</tbody></table>';
 
                                     return new HtmlString($tableHtml);
                                 })
                                 ->columnSpanFull(),
+
 
                         ])
                         ->columns(4)
