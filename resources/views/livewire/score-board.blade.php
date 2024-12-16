@@ -26,7 +26,7 @@
    <div class="flex flex-col justify-center items-center mt-10 text-white text-3xl font-bold mb-5">
         <img src="{{asset('img/christmas_party_logo.png')}}" class="w-40" alt="">
         <div>
-            LEADERBOARD
+            WINNER
         </div>
    </div>
    <div class="flex justify-center mt-5 text-white text-xl font-bold mb-5">
@@ -54,7 +54,7 @@
                     </div>
                 </div>
             @else
-                <div class="relative rounded-xl shadow-lg shadow-yellow-600 w-[250px] h-[350px]" style="background-image: url('{{ asset("img/reveal.png")}}'); background-size: cover; background-position: center; ">
+                <div class="relative rounded-xl shadow-lg shadow-yellow-600 w-[250px] h-[350px]" style="background-image: url('{{ asset("img/reveal2.png")}}'); background-size: cover; background-position: center; ">
                     <div class="absolute bottom-0 w-full bg-black bg-opacity-50 rounded-xl py-2 px-3">
                         <div class="flex flex-row">
                             <div class="basis-9/12 ps-2">
