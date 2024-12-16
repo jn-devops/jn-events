@@ -30,7 +30,7 @@
         </div>
    </div>
    <div class="flex justify-center mt-5 text-white text-xl font-bold mb-5">
-        Sample Title
+        {{$competition->name}}
    </div>
    <div class="flex justify-center">
         <div class="relative rounded-xl shadow-lg shadow-yellow-600 w-[250px] h-[350px]" style="background-image: url('{{ asset("img/sample.jpeg") }}'); background-size: cover; background-position: center; ">
