@@ -107,7 +107,7 @@
                 @else
                     <div class="card-container items-center cursor-pointer" wire:click="changeParticipant({{ $participant->id }})">
                         <div class="bg-neutral-400 rounded-full px-3 py-2 flex flex-row gap-3 text-left items-center text-white pe-3 w-52 shadow-md shadow-neutral-400">
-                            <div class="w-9 h-9 bg-black text-white rounded-full flex justify-center items-center"> 1 </div>
+                            <div class="w-9 h-9 bg-black text-white rounded-full flex justify-center items-center"> {{$participant->id}} </div>
                             <span class="text-sm font-semibold">{{$participant->name}}</span>
                         </div>
                     </div>
