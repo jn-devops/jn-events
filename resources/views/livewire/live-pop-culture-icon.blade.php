@@ -15,8 +15,8 @@
         }
         .card {
           position: relative;
-          width: 300px;
-          height: 400px;
+          width: 250px;
+          height: 300px;
           background-color: #fff;
           border-radius: 10px;
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -31,6 +31,20 @@
           position: relative;
           width: 400px;
           height: 500px;
+          background-color: #fff;
+          border-radius: 10px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          perspective: 1000px;
+          scroll-snap-align: center;
+          flex-shrink: 0;
+          overflow: hidden;
+          border: 5px solid transparent;
+          animation: borderGlow 3s infinite, preFlip 1s infinite;
+        }
+        .cardv2 {
+            position: relative;
+          width: 300px;
+          height: 400px;
           background-color: #fff;
           border-radius: 10px;
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -210,7 +224,7 @@
                 $cntr = 1;
             @endphp
             @foreach ($votes as $item)
-                @if ($item['highest'] == true) {{-- Winner--}}
+                @if ($item['rank'] == 1) {{-- Winner--}}
                     <div class="card-container items-center">
                         <div class="winner_card">
                             <div class="card-inner" onclick="toggleFlip(this)" id="winner">
@@ -228,8 +242,28 @@
                             </div>
                         </div>
                     </div>
-                @else
+                @elseif($item['rank'] > 1 && $item['rank'] < 4)
                     <div class="card-container">
+                        <div class="cardv2">
+                            <div class="card-inner" onclick="toggleFlip(this)">
+                                <div class="card-front"><img class="object-cover w-full h-full" src="{{$item['image']}}" alt=""></div>
+                                <div class="card-back"><img class="object-cover w-full h-full" src="{{$item['icon']}}" alt=""></div>
+                            </div>
+                        </div>
+                        <div class="circle-info">
+                            <div class="circle">
+                                {!! $item['cntr'] !!}
+                            </div>
+                            <div class="name">
+                                {{$item['option']}} <br> 
+                                <span class="text-sm font-normal text-yellow-500 flex items-center justify-center gap-2">
+                                    Votes: <span class="font-bold text-base">{{$item['count']}}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="card-container" style="width: ">
                         <div class="card">
                             <div class="card-inner" onclick="toggleFlip(this)">
                                 <div class="card-front"><img class="object-cover w-full h-full" src="{{$item['image']}}" alt=""></div>
