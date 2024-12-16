@@ -32,7 +32,7 @@
                     <h2 class="cursor-pointer ">All</h2>
                 </div>
                 @foreach ($category as $cat)
-                    <div wire:click="category_filter('{{$cat}}')" class="cursor-pointer px-3 py-2 border border-[#EC0E52] text-white rounded-2xl font-semibold text-xs w-16 text-center @if($currrentCategory == $cat) bg-[#EC0E52] @else bg-transparent @endif">
+                    <div wire:click="category_filter('{{$cat}}')" class="cursor-pointer px-3 py-2 border border-[#EC0E52] text-white rounded-2xl font-semibold text-xs text-center @if($currrentCategory == $cat) bg-[#EC0E52] @else bg-transparent @endif">
                         <h2 class="cursor-pointer">{{$cat}}</h2>
                     </div>
                 @endforeach
