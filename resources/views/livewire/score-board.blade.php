@@ -33,38 +33,51 @@
         {{$competition->name}}
    </div>
    <div class="flex justify-center">
-        <div class="relative rounded-xl shadow-lg shadow-yellow-600 w-[250px] h-[350px]" style="background-image: url('{{ asset("img/sample.jpeg") }}'); background-size: cover; background-position: center; ">
-            <div class="absolute bottom-0 w-full bg-black bg-opacity-50 rounded-xl py-2 px-3">
-                <div class="flex flex-row">
-                    <div class="basis-9/12 ps-2">
-                        <p class=" text-white text-sm w-full font-bold">
-                            Sample Name
-                        </p>
-                        <p class="text-[9px] text-neutral-300 italic">🎶 Sample Song</p>
-                    </div>
-                    <div class="basis-3/12">
-                        <div class="rounded-full w-10 h-10 bg-black ml-auto text-white text-xs flex justify-center items-center">
-                            95%
+    @foreach ($category_winners as $winner)
+        @if ($winner['category'] == $current_category)
+            <div class="relative rounded-xl shadow-lg shadow-yellow-600 w-[250px] h-[350px]" style="background-image: url('{{ Storage::url($current_participant->image) }}'); background-size: cover; background-position: center; ">
+                <div class="absolute bottom-0 w-full bg-black bg-opacity-50 rounded-xl py-2 px-3">
+                    <div class="flex flex-row">
+                        <div class="basis-9/12 ps-2">
+                            <p class=" text-white text-sm w-full font-bold">
+                                {{ $current_participant->name ?? '' }}
+                            </p>
+                            <p class="text-[9px] text-neutral-300 italic">🎶 {{ $current_participant->song ?? '' }}</p>
+                        </div>
+                        <div class="basis-3/12">
+                            <div class="rounded-full w-10 h-10 bg-black ml-auto text-white text-xs flex justify-center items-center">
+                                {{$winner['total_score']}}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
+    @endforeach
    </div>
    <div class="flex flex-row justify-center mt-8 " style="perspective:700px;">
         <div class="slider">
-            <div class="card-container items-center cursor-pointer" >
-                <div class="bg-[#4C43CD] rounded-full px-3 py-2 flex flex-row gap-3 text-left items-center text-white pe-3 w-52 shadow-md shadow-[#4c43cd]">
-                    <div class="w-9 h-9 bg-black text-white rounded-full flex justify-center items-center"> 1 </div>
-                    <span class="text-sm font-semibold">Smaple name</span>
-                </div>
-            </div>
-            <div class="card-container items-center cursor-pointer" >
+            @foreach ($categories as $category)
+                @if ($category == $current_category)
+                    <div class="card-container items-center cursor-pointer" >
+                        <div wire:click='change_category("{{$category}}")' class="bg-[#4C43CD] rounded-full flex flex-row gap-3 justify-center text-center items-center text-white px-5 py-2 shadow-md shadow-[#4c43cd]">
+                            <span class="text-sm font-semibold">{{$category}}</span>
+                        </div>
+                    </div>
+                @else
+                    <div class="card-container items-center cursor-pointer" >
+                        <div wire:click='change_category("{{$category}}")' class="bg-neutral-500 rounded-full flex flex-row gap-3 justify-center text-center items-center text-white px-5 py-2 shadow-md shadow-neutral-500">
+                            <span class="text-sm font-semibold">{{$category}}</span>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+            {{-- <div class="card-container items-center cursor-pointer" >
                 <div class="bg-neutral-500 rounded-full px-3 py-2 flex flex-row gap-3 text-left items-center text-white pe-3 w-52 shadow-md shadow-neutral-500">
                     <div class="w-9 h-9 bg-black text-white rounded-full flex justify-center items-center"> 1 </div>
                     <span class="text-sm font-semibold">Test</span>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
