@@ -64,6 +64,27 @@ class CompetitionResource extends Resource
                         ->columnSpanFull()
                 ])->columnSpan(2),
                 Forms\Components\Section::make()->schema([
+                    Placeholder::make('live_poll_qr_code')
+                        ->label('Winners QR Code')
+                        ->content(function (Get $get, Model $record) {
+                            return \LaraZeus\Qr\Facades\Qr::render(
+                                data:  sprintf(
+                                    '%s/competition-score-board/%s',
+                                    config('app.url'),
+                                    $record->id,
+                                ),
+                            );
+                        })->hiddenOn('create'),
+                    Placeholder::make('live_poll_link')
+                        ->label('Winners Link')
+                        ->content(function (Get $get, Model $record) {
+                            $url = sprintf(
+                                '%s/competition-score-board/%s',
+                                config('app.url'),
+                                $record->id,
+                            );
+                            return new HtmlString('<a href="' . $url . '" target="_blank" rel="noopener noreferrer" class="text-blue-500 underline">' . $url . '</a>');
+                        })->hiddenOn('create'),
                     Placeholder::make('Judges Vote Links')
                         ->content(function ($record) {
                             $judges = $record->judges;
