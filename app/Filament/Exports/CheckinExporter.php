@@ -20,7 +20,7 @@ class CheckinExporter extends Exporter
             ExportColumn::make('name')
                 ->label('Name'),
             ExportColumn::make('time')
-                ->formatStateUsing(fn (Checkin $record): string => Carbon::parse($record->created_at)->format('h:i A'))
+                ->formatStateUsing(fn (Checkin $record): string => Carbon::parse($record->created_at)->addHours(8)->format('h:i A'))
                 ->label('Time Logged'),
             ExportColumn::make('date')
                 ->formatStateUsing(fn (Checkin $record): string => Carbon::parse($record->created_at)->format('F j, Y'))
