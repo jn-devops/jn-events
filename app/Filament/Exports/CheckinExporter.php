@@ -15,16 +15,25 @@ class CheckinExporter extends Exporter
     public static function getColumns(): array
     {
         return [
+            ExportColumn::make('date')
+                ->formatStateUsing(fn (Checkin $record): string => Carbon::parse($record->created_at)->format('F j, Y'))
+                ->label('Date Logged'),
+            ExportColumn::make('time')
+                ->formatStateUsing(fn (Checkin $record): string => Carbon::parse($record->created_at)->addHours(8)->format('h:i A'))
+                ->label('Time Logged'),
             ExportColumn::make('employee_id_number')
                 ->label('ID No.'),
             ExportColumn::make('name')
                 ->label('Name'),
-            ExportColumn::make('time')
-                ->formatStateUsing(fn (Checkin $record): string => Carbon::parse($record->created_at)->addHours(8)->format('h:i A'))
-                ->label('Time Logged'),
-            ExportColumn::make('date')
-                ->formatStateUsing(fn (Checkin $record): string => Carbon::parse($record->created_at)->format('F j, Y'))
-                ->label('Date Logged'),
+            ExportColumn::make('company')
+                ->formatStateUsing(fn (Checkin $record): string => $record->employee->company ?? '')
+                ->label('Company'),
+            ExportColumn::make('unit')
+                ->formatStateUsing(fn (Checkin $record): string => $record->employee->unit ?? '')
+                ->label('Unit'),
+            ExportColumn::make('unit_group')
+                ->formatStateUsing(fn (Checkin $record): string => $record->employee->unit_group ?? '')
+                ->label('Unit Group'),
         ];
     }
 
